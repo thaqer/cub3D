@@ -12,10 +12,12 @@
 
 #include "../includes/cub3d.h"
 
-int	main(int argc, char **argv, char **environment)
+int	main(int argc, char **argv)
 {
 	(void)argv;
-	if (argc != 2 || !environment)
+	if (argc != 2)
+		return (ft_putstr_fd("Error: Invalid number of arguments\n", 2), 1);
+	if (init_game(argv[1]) == -1)
 		return (1);
 	return (0);
 }
