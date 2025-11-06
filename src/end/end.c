@@ -20,6 +20,14 @@ void	free_game(t_game *game)
 	{
 		if (game->map)
 		{
+			if (game->map->north)
+				free(game->map->north);
+			if (game->map->south)
+				free(game->map->south);
+			if (game->map->west)
+				free(game->map->west);
+			if (game->map->east)
+				free(game->map->east);
 			if (game->map->map)
 			{
 				i = 0;
@@ -29,12 +37,13 @@ void	free_game(t_game *game)
 			}
 			free(game->map);
 		}
+		if (game->textures)
+			free(game->textures);
 		if (game->flags)
 			free(game->flags);
 		free(game);
 	}
 }
-
 
 int	error_exit(t_game *game, char *message)
 {

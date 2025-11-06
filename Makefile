@@ -1,4 +1,4 @@
-NAME 	= cob3D
+NAME 	= cub3D
 CC   	= cc
 CFLAGS 	= -Wall -Werror -Wextra
 
@@ -17,7 +17,8 @@ SRCS		= src/main.c \
 			  src/init/parsing.c \
 			  src/gnl/get_next_line.c \
 			  src/gnl/get_next_line_utils.c \
-			  src/end/end.c
+			  src/end/end.c \
+			  src/debugging.c
 
 OBJS		= $(SRCS:%.c=$(objDir)/%.o)
 

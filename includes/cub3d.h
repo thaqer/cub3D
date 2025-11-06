@@ -10,66 +10,73 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_H
-# define CUBE3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
-# include <mlx.h>
 # include "../libft/libft.h"
 # include "get_next_line.h"
-# include <stdlib.h>
-# include <stddef.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <math.h>
 # include <fcntl.h>
+# include <math.h>
+# include <mlx.h>
+# include <stddef.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_flags
 {
-	int	wall_north;
-	int	wall_south;
-	int	wall_west;
-	int	wall_east;
-	int	floor;
-	int	ceiling;
-	int	map;
+	int			wall_north;
+	int			wall_south;
+	int			wall_west;
+	int			wall_east;
+	int			floor;
+	int			ceiling;
+	int			map;
 
-}	t_flags;
+}				t_flags;
 
 typedef struct s_textures
 {
-	void	*no;
-	void	*so;
-	void	*we;
-	void	*ea;
-}	t_textures;
+	void		*no;
+	void		*so;
+	void		*we;
+	void		*ea;
+}				t_textures;
 
 typedef struct s_map
 {
-	char	*north;
-	char	*south;
-	char	*west;
-	char	*east;
-	char	floor[12];
-	char	ceiling[12];
-	char	**map;
+	char		*north;
+	char		*south;
+	char		*west;
+	char		*east;
+	char		floor[12];
+	char		ceiling[12];
+	char		**map;
 
-} t_map;
- 
+}				t_map;
+
 typedef struct s_game
 {
-	void	*mlx;
-	void	*window;
-	
-	t_map	*map;
-	t_flags	*flags;
+	void		*mlx;
+	void		*window;
+
+	t_map		*map;
+	t_flags		*flags;
 	t_textures	*textures;
-	
-}	t_game;
+
+}				t_game;
 
 
-int		init_game(char *map_path);
-int		parse_map(char *map_path, t_game *game);
-void	free_game(t_game *game);
-int		error_exit(t_game *game, char *message);
+///////debugging functions
+void			print_game_info(t_game *game);
+void			print_map(t_game *game);
+void			print_textures_paths(t_game *game);
+void			print_colors(t_game *game);
+//////////////////////////
+
+int				init_game(char *map_path);
+int				parse_map(char *map_path, t_game *game);
+void			free_game(t_game *game);
+int				error_exit(t_game *game, char *message);
 
 #endif
