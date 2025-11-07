@@ -2,10 +2,13 @@ NAME 	= cub3D
 CC   	= cc
 CFLAGS 	= -Wall -Werror -Wextra
 
+
 incDir 		= includes
 objDir 		= obj
 libftDir	= libft
 LIBFT		= $(libftDir)/libft.a
+MLXDir		= MLX42
+MLX			= $(MLXDir)/build/libmlx42.a
 
 GREEN   	= \033[0;32m
 RED    		= \033[0;31m
@@ -29,9 +32,15 @@ $(LIBFT):
 	@make --no-print-directory -C $(libftDir)
 	@echo "$(GREEN)libft built $(ARROW)$(RESET)"
 
-$(NAME): $(LIBFT) $(OBJS)
+$(MLX):
+	@echo "$(GREEN)Building mlx...$(RESET)"
+	@cmake -B $(MLXDir)/build $(MLXDir) > /dev/null 2>&1
+	@cmake --build $(MLXDir)/build -j4 > /dev/null 2>&1
+	@echo "$(GREEN)mlx built $(ARROW)$(RESET)"
+
+$(NAME): $(LIBFT) $(MLX) $(OBJS) 
 	@echo "$(GREEN)Making $(NAME)...$(RESET)"
-	@$(CC) -o $(NAME) $(OBJS) -L$(libftDir) -lft
+	@$(CC) -o $(NAME) $(OBJS) -L$(libftDir) -lft  -L./$(MLXDir)/build -lmlx42 -ldl -lglfw -pthread -lm
 	@echo "$(GREEN)Done $(ARROW)$(RESET)"
 	
 $(objDir)/%.o: %.c
@@ -47,6 +56,7 @@ clean:
 fclean: clean
 	@echo "$(RED)Deleting $(NAME)...$(RESET)"
 	@rm -f $(NAME)
+	@rm -rf $(MLXDir)/build
 	@make --no-print-directory -C $(libftDir) fclean
 	@echo "$(RED)Done $(ARROW)$(RESET)"
 
