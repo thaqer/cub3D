@@ -17,7 +17,7 @@
 # include "get_next_line.h"
 # include <fcntl.h>
 # include <math.h>
-# include <mlx.h>
+# include "../MLX42/include/MLX42/MLX42.h"
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -65,7 +65,6 @@ typedef struct s_game
 	t_textures	*textures;
 
 }				t_game;
-
 
 ///////debugging functions
 void			print_game_info(t_game *game);

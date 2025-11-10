@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbaniatt <tbaniatt@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/23 15:29:04 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/08/28 16:38:25 by dqaddomi         ###   ########.fr       */
+/*   Created: 2025-11-10 16:02:20 by tbaniatt          #+#    #+#             */
+/*   Updated: 2025-11-10 16:02:20 by tbaniatt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ int	main(int argc, char **argv)
 		return (ft_putstr_fd("Error: File must have .cub extension\n", 2), 1);
 	if (init_game(argv[1]) == -1)
 		return (1);
-
 	return (0);
 }
