@@ -36,21 +36,18 @@ static void	init_flags_struct(t_flags *flags)
 
 static void	init_textures_struct(t_textures *textures)
 {
-	textures->no = NULL;
-	textures->so = NULL;
-	textures->we = NULL;
-	textures->ea = NULL;
+	textures->north = NULL;
+	textures->south = NULL;
+	textures->west = NULL;
+	textures->east = NULL;
 }
 
-int	init_game(char *map_path)
+int	init_game(char *map_path, t_game *game)
 {
-	t_game	*game;
-
 	game = malloc(sizeof(t_game));
 	if (!game)
 		return (-1);
 	game->mlx = NULL;
-	game->window = NULL;
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
 		return (free(game), -1);
@@ -60,6 +57,9 @@ int	init_game(char *map_path)
 	game->textures = malloc(sizeof(t_textures));
 	if (!game->textures)
 		return (free(game->flags), free(game->map), free(game), -1);
+	game->images = malloc(sizeof(t_images));
+	if (!game->images)
+		return (free(game->textures), free(game->flags), free(game->map), free(game), -1);
 	init_map_struct(game->map);
 	init_flags_struct(game->flags);
 	init_textures_struct(game->textures);
@@ -67,5 +67,6 @@ int	init_game(char *map_path)
 		return (-1);
 	///////debugging
 	print_game_info(game);
+	// test_mlx_functions(game);
 	return (0);
 }

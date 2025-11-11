@@ -53,3 +53,28 @@ void	print_game_info(t_game *game)
 	print_colors(game);
 	print_map(game);
 }
+
+
+int32_t	test_mlx_functions()
+{
+	mlx_t		*mlx;
+	mlx_image_t	*img;
+	mlx_texture_t *tex;
+
+	mlx = mlx_init(800, 600, "MLX42 Example", false);
+	if (!mlx)
+		return (EXIT_FAILURE);
+	tex = mlx_load_png("textures/wall.png");
+	if (!tex)
+		return (mlx_terminate(mlx), EXIT_FAILURE);
+
+	img = mlx_texture_to_image(mlx, tex);
+	mlx_delete_texture(tex);
+	if (!img)
+		return (mlx_terminate(mlx), EXIT_FAILURE);
+
+	mlx_image_to_window(mlx, img, 0, 0);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+	return (EXIT_SUCCESS);
+}

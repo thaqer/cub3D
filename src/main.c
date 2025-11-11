@@ -26,11 +26,16 @@ static int	validate_file_extension(char *filename)
 
 int	main(int argc, char **argv)
 {
+	t_game	*game;
+
+	game = NULL;
 	if (argc != 2)
 		return (ft_putstr_fd("Error: Invalid number of arguments\n", 2), 1);
 	if (!validate_file_extension(argv[1]))
 		return (ft_putstr_fd("Error: File must have .cub extension\n", 2), 1);
-	if (init_game(argv[1]) == -1)
+	if (init_game(argv[1], game) == -1)
 		return (1);
+	// init_window(game);
+	
 	return (0);
 }

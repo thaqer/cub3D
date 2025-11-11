@@ -37,11 +37,19 @@ typedef struct s_flags
 
 typedef struct s_textures
 {
-	void		*no;
-	void		*so;
-	void		*we;
-	void		*ea;
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*west;
+	mlx_texture_t	*east;
 }				t_textures;
+
+typedef struct s_images
+{
+	mlx_image_t		*north;
+	mlx_image_t		*south;
+	mlx_image_t		*west;
+	mlx_image_t		*east;
+}				t_images;
 
 typedef struct s_map
 {
@@ -57,12 +65,11 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	void		*mlx;
-	void		*window;
-
+	mlx_t		*mlx;
 	t_map		*map;
 	t_flags		*flags;
 	t_textures	*textures;
+	t_images	*images;
 
 }				t_game;
 
@@ -71,9 +78,10 @@ void			print_game_info(t_game *game);
 void			print_map(t_game *game);
 void			print_textures_paths(t_game *game);
 void			print_colors(t_game *game);
+int32_t			test_mlx_functions();
 //////////////////////////
 
-int				init_game(char *map_path);
+int				init_game(char *map_path, t_game *game);
 int				parse_map(char *map_path, t_game *game);
 void			free_game(t_game *game);
 int				error_exit(t_game *game, char *message);
