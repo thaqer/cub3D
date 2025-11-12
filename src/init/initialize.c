@@ -42,31 +42,51 @@ static void	init_textures_struct(t_textures *textures)
 	textures->east = NULL;
 }
 
-int	init_game(char *map_path, t_game *game)
+t_game	*init_game(char *map_path)
 {
+	t_game	*game;
+
 	game = malloc(sizeof(t_game));
 	if (!game)
-		return (-1);
+	{
+		error_exit(NULL, "Error: Failed to allocate memory for game\n");
+		return (NULL);
+	}
 	game->mlx = NULL;
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
-		return (free(game), -1);
+	{
+		error_exit(game, "Error: Failed to allocate memory for map\n");
+		return (NULL);
+	}
 	game->flags = malloc(sizeof(t_flags));
 	if (!game->flags)
-		return (free(game->map), free(game), -1);
+	{
+		error_exit(game, "Error: Failed to allocate memory for flags\n");
+		return (NULL);
+	}
 	game->textures = malloc(sizeof(t_textures));
 	if (!game->textures)
-		return (free(game->flags), free(game->map), free(game), -1);
+	{
+		error_exit(game, "Error: Failed to allocate memory for textures\n");
+		return (NULL);
+	}
 	game->images = malloc(sizeof(t_images));
 	if (!game->images)
-		return (free(game->textures), free(game->flags), free(game->map), free(game), -1);
+	{
+		error_exit(game, "Error: Failed to allocate memory for images\n");
+		return (NULL);
+	}
 	init_map_struct(game->map);
 	init_flags_struct(game->flags);
 	init_textures_struct(game->textures);
 	if (parse_map(map_path, game) == -1)
-		return (-1);
+	{
+		error_exit(game, "Error: Failed to parse map\n");
+		return (NULL);
+	}
 	///////debugging
 	print_game_info(game);
 	// test_mlx_functions(game);
-	return (0);
+	return (game);
 }

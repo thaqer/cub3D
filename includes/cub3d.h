@@ -78,12 +78,14 @@ void			print_game_info(t_game *game);
 void			print_map(t_game *game);
 void			print_textures_paths(t_game *game);
 void			print_colors(t_game *game);
-int32_t			test_mlx_functions();
+int32_t			test_mlx_functions(t_game *game);
 //////////////////////////
 
-int				init_game(char *map_path, t_game *game);
+t_game			*init_game(char *map_path);
 int				parse_map(char *map_path, t_game *game);
 void			free_game(t_game *game);
 int				error_exit(t_game *game, char *message);
+int				run_game(t_game *game);
+void			key_hook(mlx_key_data_t keydata, void *param);
 
 #endif

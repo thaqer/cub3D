@@ -28,14 +28,14 @@ int	main(int argc, char **argv)
 {
 	t_game	*game;
 
-	game = NULL;
 	if (argc != 2)
-		return (ft_putstr_fd("Error: Invalid number of arguments\n", 2), 1);
+		return (error_exit(NULL, "Error: Invalid number of arguments\n"));
 	if (!validate_file_extension(argv[1]))
-		return (ft_putstr_fd("Error: File must have .cub extension\n", 2), 1);
-	if (init_game(argv[1], game) == -1)
+		return (error_exit(NULL, "Error: File must have .cub extension\n"));
+	game = init_game(argv[1]);
+	if (!game)
 		return (1);
-	// init_window(game);
-	
+	if (run_game(game) == -1)
+		return (1);	
 	return (0);
 }

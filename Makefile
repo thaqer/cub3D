@@ -1,6 +1,6 @@
 NAME 	= cub3D
 CC   	= cc
-CFLAGS 	= -Wall -Werror -Wextra
+CFLAGS 	= -Wall -Werror -Wextra -g3
 
 
 incDir 		= includes
@@ -20,6 +20,7 @@ SRCS		= src/main.c \
 			  src/init/parsing.c \
 			  src/gnl/get_next_line.c \
 			  src/gnl/get_next_line_utils.c \
+			  src/run_game/run.c \
 			  src/end/end.c \
 			  src/debugging.c
 
