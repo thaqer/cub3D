@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaniatt <tbaniatt@student.42.fr>          #+#  +:+       +#+        */
+/*   By: tbaniatt <tbaniatt@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-31 12:25:26 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025-10-31 12:25:26 by tbaniatt         ###   ########.fr       */
+/*   Created: 2025/10/31 12:25:26 by tbaniatt          #+#    #+#             */
+/*   Updated: 2025/11/15 00:10:39 by tbaniatt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,6 @@ void	free_textures(t_textures *textures)
 		if (textures->east)
 			mlx_delete_texture(textures->east);
 		free(textures);
-	}
-}
-
-void	free_images(t_images *images)
-{
-	if (images)
-	{
-		if (images->north)
-			mlx_delete_image(images->north->context, images->north);
-		if (images->south)
-			mlx_delete_image(images->south->context, images->south);
-		if (images->west)
-			mlx_delete_image(images->west->context, images->west);
-		if (images->east)
-			mlx_delete_image(images->east->context, images->east);
-		free(images);
 	}
 }
 
@@ -79,12 +63,15 @@ void	free_game(t_game *game)
 {
 	if (game)
 	{
-		if (game->mlx)
-			mlx_terminate(game->mlx);
 		free_map(game->map);
 		free_textures(game->textures);
-		free_images(game->images);
 		free_flags(game->flags);
+		if (game->player)
+			free(game->player);
+		if (game->img && game->mlx)
+			mlx_delete_image(game->mlx, game->img);
+		if (game->mlx)
+			mlx_terminate(game->mlx);
 		free(game);
 	}
 }

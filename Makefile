@@ -22,7 +22,8 @@ SRCS		= src/main.c \
 			  src/gnl/get_next_line_utils.c \
 			  src/run_game/run.c \
 			  src/end/end.c \
-			  src/debugging.c
+			  src/debugging.c \
+			  src/utils/init_utils.c
 
 OBJS		= $(SRCS:%.c=$(objDir)/%.o)
 

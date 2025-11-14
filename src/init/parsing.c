@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaniatt <tbaniatt@student.42.fr>          #+#  +:+       +#+        */
+/*   By: tbaniatt <tbaniatt@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-31 10:32:37 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025-10-31 10:32:37 by tbaniatt         ###   ########.fr       */
+/*   Created: 2025/10/31 10:32:37 by tbaniatt          #+#    #+#             */
+/*   Updated: 2025/11/15 00:10:39 by tbaniatt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	parse_wall_texture(char *line, t_game *game)
 	return (0);
 }
 
-static int	parse_color(char *line, t_game *game)
+static int	parse_color_values(char *line, t_game *game)
 {
 	char	*color_str;
 	char	type;
@@ -76,11 +76,13 @@ static int	parse_color(char *line, t_game *game)
 	if (type == 'F' && !game->flags->floor)
 	{
 		ft_strlcpy(game->map->floor, color_str, line - color_str + 1);
+		parse_color(game->map->floor, &game->floor_color);
 		game->flags->floor = 1;
 	}
 	else if (type == 'C' && !game->flags->ceiling)
 	{
 		ft_strlcpy(game->map->ceiling, color_str, line - color_str + 1);
+		parse_color(game->map->ceiling, &game->ceiling_color);
 		game->flags->ceiling = 1;
 	}
 	else
@@ -101,12 +103,16 @@ int	parse_map(char *map_path, t_game *game)
 {
 	int		fd;
 	char	*line;
+	char	**temp_map = NULL;
+	int		map_line_count = 0;
 
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
 		return (error_exit(game, "Error: Unable to open map file\n"));
+	
+	// First pass: parse textures and colors
 	line = get_next_line(fd);
-	while (line)
+	while (line && !all_elements_parsed(game->flags))
 	{
 		if (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
 			|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0)
@@ -116,14 +122,37 @@ int	parse_map(char *map_path, t_game *game)
 		}
 		else if (ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0)
 		{
-			if (parse_color(line, game) == -1)
+			if (parse_color_values(line, game) == -1)
 				return (free(line), close(fd), -1);
 		}
 		free(line);
 		line = get_next_line(fd);
 	}
-	close(fd);
+
 	if (!all_elements_parsed(game->flags))
-		return (error_exit(game, "Error: Missing map elements\n"));
+		return (close(fd), error_exit(game, "Error: Missing map elements\n"));
+
+	// Second pass: parse map
+	while (line)
+	{
+		if (ft_strlen(line) > 1) // Skip empty lines
+		{
+			temp_map = realloc(temp_map, sizeof(char *) * (map_line_count + 2));
+			if (!temp_map)
+				return (free(line), close(fd), error_exit(game, "Error: Memory allocation failed\n"));
+			
+			// Remove newline and store line
+			if (line[ft_strlen(line) - 1] == '\n')
+				line[ft_strlen(line) - 1] = '\0';
+			temp_map[map_line_count] = ft_strdup(line);
+			map_line_count++;
+			temp_map[map_line_count] = NULL;
+		}
+		free(line);
+		line = get_next_line(fd);
+	}
+	
+	close(fd);
+	game->map->map = temp_map;
 	return (0);
 }
