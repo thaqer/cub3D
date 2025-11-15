@@ -6,7 +6,7 @@
 /*   By: tbaniatt <tbaniatt@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/15 00:10:39 by tbaniatt         ###   ########.fr       */
+/*   Updated: 2025/11/15 13:45:47 by tbaniatt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ int				parse_map(char *map_path, t_game *game);
 void			free_game(t_game *game);
 int				error_exit(t_game *game, char *message);
 int				run_game(t_game *game);
-void			key_hook(mlx_key_data_t keydata, void *param);
+void			handle_movement(t_game *game);
+void			game_loop(void *param);
 uint32_t		rgb_to_uint32(int r, int g, int b);
 void			parse_color(char *color_str, uint32_t *color);
 void			cast_rays(void *param);

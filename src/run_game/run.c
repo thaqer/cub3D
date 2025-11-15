@@ -6,7 +6,7 @@
 /*   By: tbaniatt <tbaniatt@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:13:45 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/15 00:18:38 by tbaniatt         ###   ########.fr       */
+/*   Updated: 2025/11/15 13:59:36 by tbaniatt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,56 +32,53 @@ int run_game(t_game *game)
 	game->textures->east = mlx_load_png(game->map->east);
 	if (!game->textures->east)
 		return (error_exit(game, "Error: Failed to load east texture\n"));
-	mlx_key_hook(game->mlx, &key_hook, game);
 	mlx_image_to_window(game->mlx, game->img, 0, 0);
-	mlx_loop_hook(game->mlx, &cast_rays, game);
+	mlx_loop_hook(game->mlx, &game_loop, game);
 	mlx_loop(game->mlx);
 	free_game(game);
 	return (EXIT_SUCCESS);
 }
 
-void	key_hook(mlx_key_data_t keydata, void *param)
+
+void	handle_movement(t_game *game)
 {
-	t_game	*game;
 	double	move_speed = 0.05;
 	double	rot_speed = 0.05;
 	double	old_dir_x;
 	double	old_plane_x;
 
-	game = (t_game *)param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
-	{
-		mlx_close_window(game->mlx);
-	}
-	else if (keydata.key == MLX_KEY_W && (keydata.action == MLX_RELEASE || keydata.action == MLX_REPEAT))
+	// Movement keys - can be pressed simultaneously
+	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
 	{
 		if (game->map->map[(int)(game->player->y)][(int)(game->player->x + game->player->dir_x * move_speed)] != '1')
 			game->player->x += game->player->dir_x * move_speed;
 		if (game->map->map[(int)(game->player->y + game->player->dir_y * move_speed)][(int)(game->player->x)] != '1')
 			game->player->y += game->player->dir_y * move_speed;
 	}
-	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_RELEASE || keydata.action == MLX_REPEAT))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
 	{
 		if (game->map->map[(int)(game->player->y)][(int)(game->player->x - game->player->dir_x * move_speed)] != '1')
 			game->player->x -= game->player->dir_x * move_speed;
 		if (game->map->map[(int)(game->player->y - game->player->dir_y * move_speed)][(int)(game->player->x)] != '1')
 			game->player->y -= game->player->dir_y * move_speed;
 	}
-	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE || keydata.action == MLX_REPEAT))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
 	{
 		if (game->map->map[(int)(game->player->y)][(int)(game->player->x - game->player->dir_y * move_speed)] != '1')
 			game->player->x -= game->player->dir_y * move_speed;
 		if (game->map->map[(int)(game->player->y + game->player->dir_x * move_speed)][(int)(game->player->x)] != '1')
 			game->player->y += game->player->dir_x * move_speed;
 	}
-	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE || keydata.action == MLX_REPEAT))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
 	{
 		if (game->map->map[(int)(game->player->y)][(int)(game->player->x + game->player->dir_y * move_speed)] != '1')
 			game->player->x += game->player->dir_y * move_speed;
 		if (game->map->map[(int)(game->player->y - game->player->dir_x * move_speed)][(int)(game->player->x)] != '1')
 			game->player->y -= game->player->dir_x * move_speed;
 	}
-	else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_RELEASE || keydata.action == MLX_REPEAT))
+	
+	// Rotation keys - can also be pressed simultaneously
+	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 	{
 		old_dir_x = game->player->dir_x;
 		game->player->dir_x = game->player->dir_x * cos(rot_speed) - game->player->dir_y * sin(rot_speed);
@@ -90,7 +87,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		game->player->plane_x = game->player->plane_x * cos(rot_speed) - game->player->plane_y * sin(rot_speed);
 		game->player->plane_y = old_plane_x * sin(rot_speed) + game->player->plane_y * cos(rot_speed);
 	}
-	else if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_RELEASE || keydata.action == MLX_REPEAT))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
 	{
 		old_dir_x = game->player->dir_x;
 		game->player->dir_x = game->player->dir_x * cos(-rot_speed) - game->player->dir_y * sin(-rot_speed);
@@ -99,6 +96,23 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		game->player->plane_x = game->player->plane_x * cos(-rot_speed) - game->player->plane_y * sin(-rot_speed);
 		game->player->plane_y = old_plane_x * sin(-rot_speed) + game->player->plane_y * cos(-rot_speed);
 	}
+}
+
+void	game_loop(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	
+	// Handle exit key
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(game->mlx);
+	
+	// Handle movement and rotation
+	handle_movement(game);
+	
+	// Cast rays and render
+	cast_rays(param);
 }
 
 void	cast_rays(void *param)
