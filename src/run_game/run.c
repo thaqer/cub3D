@@ -47,7 +47,9 @@ void	handle_movement(t_game *game)
 	double	old_dir_x;
 	double	old_plane_x;
 
-	// Movement keys - can be pressed simultaneously
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT_SHIFT) || 
+		mlx_is_key_down(game->mlx, MLX_KEY_RIGHT_SHIFT))
+		move_speed *= 2;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
 	{
 		if (game->map->map[(int)(game->player->y)][(int)(game->player->x + game->player->dir_x * move_speed)] != '1')
@@ -76,8 +78,6 @@ void	handle_movement(t_game *game)
 		if (game->map->map[(int)(game->player->y - game->player->dir_x * move_speed)][(int)(game->player->x)] != '1')
 			game->player->y -= game->player->dir_x * move_speed;
 	}
-	
-	// Rotation keys - can also be pressed simultaneously
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 	{
 		old_dir_x = game->player->dir_x;
@@ -103,16 +103,19 @@ void	game_loop(void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
-	
-	// Handle exit key
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(game->mlx);
-	
-	// Handle movement and rotation
 	handle_movement(game);
-	
-	// Cast rays and render
 	cast_rays(param);
+}
+
+static void	init_ray(t_ray *ray, t_game *game, int x)
+{
+	ray->camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
+	ray->ray_dir_x = game->player->dir_x + game->player->plane_x * ray->camera_x;
+	ray->ray_dir_y = game->player->dir_y + game->player->plane_y * ray->camera_x;
+	ray->map_x = (int)game->player->x;
+	ray->map_y = (int)game->player->y;
 }
 
 void	cast_rays(void *param)
@@ -126,29 +129,18 @@ void	cast_rays(void *param)
 	x = 0;
 	while (x < WINDOW_WIDTH)
 	{
-		ray.camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
-		ray.ray_dir_x = game->player->dir_x + game->player->plane_x * ray.camera_x;
-		ray.ray_dir_y = game->player->dir_y + game->player->plane_y * ray.camera_x;
-
-		ray.map_x = (int)game->player->x;
-		ray.map_y = (int)game->player->y;
-
+		init_ray(&ray, game, x);
 		if (ray.ray_dir_x == 0)
 			ray.delta_dist_x = 1e30;
 		else
 			ray.delta_dist_x = fabs(1 / ray.ray_dir_x);
-		
 		if (ray.ray_dir_y == 0)
 			ray.delta_dist_y = 1e30;
 		else
 			ray.delta_dist_y = fabs(1 / ray.ray_dir_y);
-
 		perform_dda(game, &ray);
-		
 		calculate_wall_distance(&ray);
-
 		draw_wall(game, &ray, x);
-
 		x++;
 	}
 }
@@ -212,7 +204,18 @@ void	perform_dda(t_game *game, t_ray *ray)
 			ray->side = 1;
 		}
 
-		if (game->map->map[ray->map_y] && game->map->map[ray->map_y][ray->map_x] == '1')
+		// Check bounds before accessing the map
+		if (ray->map_x < 0 || ray->map_y < 0 || !game->map->map[ray->map_y])
+		{
+			ray->hit = 1;
+			break;
+		}
+		if (game->map->map[ray->map_y][ray->map_x] == '\0')
+		{
+			ray->hit = 1;  // Treat end of row as a wall hit
+			break;
+		}
+		if (game->map->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
 }

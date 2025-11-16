@@ -45,38 +45,12 @@ static void	init_textures_struct(t_textures *textures)
 t_game	*init_game(char *map_path)
 {
 	t_game	*game;
+	t_game	*temp;
 
-	game = malloc(sizeof(t_game));
+	temp = NULL;
+	game = malloc_init(temp);
 	if (!game)
-	{
-		error_exit(NULL, "Error: Failed to allocate memory for game\n");
 		return (NULL);
-	}
-	game->mlx = NULL;
-	game->map = malloc(sizeof(t_map));
-	if (!game->map)
-	{
-		error_exit(game, "Error: Failed to allocate memory for map\n");
-		return (NULL);
-	}
-	game->flags = malloc(sizeof(t_flags));
-	if (!game->flags)
-	{
-		error_exit(game, "Error: Failed to allocate memory for flags\n");
-		return (NULL);
-	}
-	game->textures = malloc(sizeof(t_textures));
-	if (!game->textures)
-	{
-		error_exit(game, "Error: Failed to allocate memory for textures\n");
-		return (NULL);
-	}
-	game->player = malloc(sizeof(t_player));
-	if (!game->player)
-	{
-		error_exit(game, "Error: Failed to allocate memory for player\n");
-		return (NULL);
-	}
 	init_map_struct(game->map);
 	init_flags_struct(game->flags);
 	init_textures_struct(game->textures);
@@ -84,27 +58,52 @@ t_game	*init_game(char *map_path)
 	game->floor_color = 0;
 	game->ceiling_color = 0;
 	if (parse_map(map_path, game) == -1)
-	{
-		error_exit(game, "Error: Failed to parse map\n");
-		return (NULL);
-	}
+		return (error_exit(game, "Error: Failed to parse map\n"), NULL);
 	init_player(game);
-	///////debugging
 	print_game_info(game);
-	// test_mlx_functions(game);
 	return (game);
+}
+
+static void	player_direction(t_game *game, char player_dir)
+{
+	game->player->dir_x = 0;
+	game->player->dir_y = 0;
+	game->player->plane_x = 0;
+	game->player->plane_y = 0;
+	if (player_dir == 'N')
+	{
+		game->player->dir_y = -1;
+		game->player->plane_x = 0.72;
+	}
+	else if (player_dir == 'S')
+	{
+		game->player->dir_y = 1;
+		game->player->plane_x = -0.72;
+	}
+	else if (player_dir == 'E')
+	{
+		game->player->dir_x = 1;
+		game->player->plane_y = 0.72;
+	}
+	else if (player_dir == 'W')
+	{
+		game->player->dir_x = -1;
+		game->player->plane_y = -0.72;
+	}
 }
 
 void	init_player(t_game *game)
 {
-	int		i, j;
-	char	player_dir = 0;
+	int		i;
+	int		j;
+	char	player_dir;
 
-	i = 0;
-	while (game->map->map[i])
+	i = -1;
+	player_dir = 0;
+	while (game->map->map[++i])
 	{
-		j = 0;
-		while (game->map->map[i][j])
+		j = -1;
+		while (game->map->map[i][++j])
 		{
 			if (game->map->map[i][j] == 'N' || game->map->map[i][j] == 'S' ||
 				game->map->map[i][j] == 'E' || game->map->map[i][j] == 'W')
@@ -113,41 +112,11 @@ void	init_player(t_game *game)
 				game->player->y = i + 0.5;
 				player_dir = game->map->map[i][j];
 				game->map->map[i][j] = '0';
-				break;
+				break ;
 			}
-			j++;
 		}
 		if (player_dir)
-			break;
-		i++;
+			break ;
 	}
-	// Set player direction
-	if (player_dir == 'N')
-	{
-		game->player->dir_x = 0;
-		game->player->dir_y = -1;
-		game->player->plane_x = 0.66;
-		game->player->plane_y = 0;
-	}
-	else if (player_dir == 'S')
-	{
-		game->player->dir_x = 0;
-		game->player->dir_y = 1;
-		game->player->plane_x = -0.66;
-		game->player->plane_y = 0;
-	}
-	else if (player_dir == 'E')
-	{
-		game->player->dir_x = 1;
-		game->player->dir_y = 0;
-		game->player->plane_x = 0;
-		game->player->plane_y = 0.66;
-	}
-	else if (player_dir == 'W')
-	{
-		game->player->dir_x = -1;
-		game->player->dir_y = 0;
-		game->player->plane_x = 0;
-		game->player->plane_y = -0.66;
-	}
+	player_direction(game, player_dir);
 }

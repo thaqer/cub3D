@@ -112,6 +112,7 @@ int32_t			test_mlx_functions(t_game *game);
 //////////////////////////
 
 t_game			*init_game(char *map_path);
+t_game			*malloc_init(t_game *game);
 void			init_player(t_game *game);
 int				parse_map(char *map_path, t_game *game);
 void			free_game(t_game *game);

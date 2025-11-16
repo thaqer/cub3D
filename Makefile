@@ -17,6 +17,7 @@ ARROW   	= ✔
 
 SRCS		= src/main.c \
 			  src/init/initialize.c \
+			  src/init/init_utils.c \
 			  src/init/parsing.c \
 			  src/gnl/get_next_line.c \
 			  src/gnl/get_next_line_utils.c \

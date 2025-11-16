@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debuging.c                                         :+:      :+:    :+:   */
+/*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbaniatt <tbaniatt@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -54,12 +54,11 @@ void	print_game_info(t_game *game)
 	print_map(game);
 }
 
-
 int32_t	test_mlx_functions(t_game *game)
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	mlx_texture_t *tex;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	mlx_texture_t	*tex;
 
 	mlx = mlx_init(800, 600, "MLX42 Example", false);
 	if (!mlx)
@@ -67,12 +66,10 @@ int32_t	test_mlx_functions(t_game *game)
 	tex = mlx_load_png(game->map->north);
 	if (!tex)
 		return (error_exit(game, "Error: Failed to load texture in test\n"));
-
 	img = mlx_texture_to_image(mlx, tex);
 	mlx_delete_texture(tex);
 	if (!img)
-		return (error_exit(game, "Error: Failed to convert texture to image\n"));
-
+		return (error_exit(game, "Error: converting texture to image\n"));
 	mlx_image_to_window(mlx, img, 0, 0);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);

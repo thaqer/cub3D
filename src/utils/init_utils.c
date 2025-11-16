@@ -28,22 +28,16 @@ void	parse_color(char *color_str, uint32_t *color)
 		*color = 0;
 		return;
 	}
-
 	r = ft_atoi(rgb_parts[0]);
 	g = ft_atoi(rgb_parts[1]);
 	b = ft_atoi(rgb_parts[2]);
-
-	// Clamp values to 0-255
 	if (r < 0) r = 0;
 	if (r > 255) r = 255;
 	if (g < 0) g = 0;
 	if (g > 255) g = 255;
 	if (b < 0) b = 0;
 	if (b > 255) b = 255;
-
 	*color = rgb_to_uint32(r, g, b);
-
-	// Free allocated memory
 	free(rgb_parts[0]);
 	free(rgb_parts[1]);
 	free(rgb_parts[2]);
