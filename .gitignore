@@ -1,0 +1,24 @@
+# Object files
+*.o
+*.obj
+obj/
+
+# Executable files
+*.exe
+cub3d
+cub3D
+
+# Library files
+*.a
+*.so
+*.dylib
+
+# Debug files
+*.dSYM/
+
+# IDE files
+.vscode/
+.DS_Store
+
+# Compilation artifacts
+Makefile.bak
