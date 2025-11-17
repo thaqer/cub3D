@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_control.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 23:33:03 by daniah            #+#    #+#             */
-/*   Updated: 2025/11/17 00:52:28 by daniah           ###   ########.fr       */
+/*   Updated: 2025/11/17 18:23:17 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void handle_mouse_move(double x_pos, double y_pos, void *param)
     double  rotation;
     
     game = (t_game *)param;
-    sensitivity = 0.002;
+    sensitivity = 0.0015;
     mouse_move_x = x_pos - game->mouse_x;
     game->mouse_x = x_pos;
     game->mouse_y = y_pos;
@@ -54,6 +54,7 @@ void init_mouse(t_game *game)
 	mlx_get_mouse_pos(game->mlx, &mouse_x, &mouse_y);
 	game->mouse_x = (double)mouse_x;
 	game->mouse_y = (double)mouse_y;
-	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_HIDDEN);
+    
+	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_DISABLED);
 	mlx_cursor_hook(game->mlx, &handle_mouse_move, game);
 }

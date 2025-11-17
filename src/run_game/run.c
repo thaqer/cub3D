@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:13:45 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/17 00:48:52 by daniah           ###   ########.fr       */
+/*   Updated: 2025/11/17 20:28:15 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	handle_movement(t_game *game)
 		move_speed *= 2;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
 	{
-		if (game->map->map[(int)(game->player->y)][(int)(game->player->x + game->player->dir_x * move_speed)] != '1')
+		if (game->map->map[(int)(game->player->y)][(int)(game->player->x + game->player->dir_x * move_speed)] != '1')// i need to make it check all dir F B L and R 
 			game->player->x += game->player->dir_x * move_speed;
 		if (game->map->map[(int)(game->player->y + game->player->dir_y * move_speed)][(int)(game->player->x)] != '1')
 			game->player->y += game->player->dir_y * move_speed;
@@ -292,7 +292,7 @@ void	draw_wall(t_game *game, t_ray *ray, int x)
 		if (tex_y >= (int)texture->height) tex_y = texture->height - 1;
 		tex_pos += step;
 		color = texture_data[tex_y * texture->width + tex_x];
-		if (ray->side == 1)
+		if (ray->side == 0)
 			color = (color >> 1) & 8355711;
 		mlx_put_pixel(game->img, x, y, color);
 		y++;
