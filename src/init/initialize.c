@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaniatt <tbaniatt@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 09:16:39 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/15 00:12:31 by tbaniatt         ###   ########.fr       */
+/*   Updated: 2025/11/18 11:56:03 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,14 @@ t_game	*init_game(char *map_path)
 	game->floor_color = 0;
 	game->ceiling_color = 0;
 	if (parse_map(map_path, game) == -1)
-		return (error_exit(game, "Error: Failed to parse map\n"), NULL);
+	{
+		error_exit(game, "Error: Failed to parse map\n");
+		return (NULL);
+	}
+	if (check_textures(game) == -1)
+		return (NULL);
+	if (validate_map(game) == -1)
+		return (NULL);
 	init_player(game);
 	print_game_info(game);
 	return (game);

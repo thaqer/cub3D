@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/17 00:43:30 by daniah           ###   ########.fr       */
+/*   Updated: 2025/11/18 13:39:44 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,27 +113,46 @@ void			print_colors(t_game *game);
 int32_t			test_mlx_functions(t_game *game);
 //////////////////////////
 
-//initialize.c 
+// initialize.c 
 t_game			*init_game(char *map_path);
 void			init_player(t_game *game);
+uint32_t		rgb_to_uint32(int r, int g, int b);
 
-//init_utils.c 
+// init_utils.c 
 t_game			*malloc_init(t_game *game);
+void			parse_color(char *color_str, uint32_t *color);
 
-//mouse_control.c 
-void handle_mouse_move(double x_pos, double y_pos, void *param);
-void init_mouse(t_game *game);
+// map_parsing.c
+int				parse_map_grid(char *map_path, t_game *game);
+
+// map_parsing_utils.c
+int				valid_map_char(char c);
+int				is_line_empty(char *line);
+char			*copy_map_line(char *line);
+int				open_file_checked(char *path, t_game *game);
+
+// mouse_control.c 
+void			handle_mouse_move(double x_pos, double y_pos, void *param);
+void			init_mouse(t_game *game);
 
 // parsing.c 
 int				parse_map(char *map_path, t_game *game);
+
+
+// end.c 
 void			free_game(t_game *game);
 int				error_exit(t_game *game, char *message);
+
+// map_validation.c 
+int				validate_map(t_game *game);
+
+// textures_validation.c
+int				check_textures(t_game *game);
+
+// run.c 
 int				run_game(t_game *game);
-//run.c 
 void			handle_movement(t_game *game);
 void			game_loop(void *param);
-uint32_t		rgb_to_uint32(int r, int g, int b);
-void			parse_color(char *color_str, uint32_t *color);
 void			cast_rays(void *param);
 void			draw_floor_ceiling(t_game *game);
 void			perform_dda(t_game *game, t_ray *ray);
