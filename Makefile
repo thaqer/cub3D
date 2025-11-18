@@ -25,7 +25,11 @@ SRCS		= src/main.c \
 			  src/run_game/mouse_control.c \
 			  src/end/end.c \
 			  src/debugging.c \
-			  src/utils/init_utils.c
+			  src/utils/init_utils.c \
+			  src/parsing/map_parsing.c \
+			  src/parsing/map_parsing_utils.c \
+			  src/parsing/map_validation.c \
+			  src/parsing/textures_validation.c
 
 OBJS		= $(SRCS:%.c=$(objDir)/%.o)
 
