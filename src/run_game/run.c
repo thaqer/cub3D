@@ -366,7 +366,7 @@ static int	calculate_tex_x(t_ray *ray, t_game *game, mlx_texture_t *texture)
 static void	render_wall_column(t_game *game, t_ray *ray, int x, int tex_x)
 {
 	mlx_texture_t	*texture;
-	uint32_t		*texture_data;
+	uint8_t			*pixel;
 	int				y;
 	int				tex_y;
 	uint32_t		color;
@@ -375,7 +375,6 @@ static void	render_wall_column(t_game *game, t_ray *ray, int x, int tex_x)
 	ray->step = 1.0 * texture->height / ray->line_height;
 	ray->tex_pos = (ray->draw_start - WINDOW_HEIGHT / 2 + ray->line_height / 2)
 		* ray->step;
-	texture_data = (uint32_t *)texture->pixels;
 	y = ray->draw_start - 1;
 	while (++y <= ray->draw_end)
 	{
@@ -385,9 +384,10 @@ static void	render_wall_column(t_game *game, t_ray *ray, int x, int tex_x)
 		if (tex_y >= (int)texture->height)
 			tex_y = texture->height - 1;
 		ray->tex_pos += ray->step;
-		color = texture_data[tex_y * texture->width + tex_x];
-		// if (ray->side == 0)
-		// 	color = (color >> 1) & 8355711;
+		pixel = &texture->pixels[(tex_y * texture->width + tex_x) * 4];
+		color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
+		// if (ray->side == 1)
+		// 	color = (color >> 1) & 0x7F7F7F7F;
 		mlx_put_pixel(game->img, x, y, color);
 	}
 }
