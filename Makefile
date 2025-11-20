@@ -18,7 +18,6 @@ ARROW   	= ✔
 SRCS		= src/main.c \
 			  src/init/initialize.c \
 			  src/init/init_utils.c \
-			  src/init/parsing.c \
 			  src/gnl/get_next_line.c \
 			  src/gnl/get_next_line_utils.c \
 			  src/run_game/run.c \
@@ -26,6 +25,7 @@ SRCS		= src/main.c \
 			  src/end/end.c \
 			  src/debugging.c \
 			  src/utils/init_utils.c \
+			  src/parsing/parsing.c \
 			  src/parsing/map_parsing.c \
 			  src/parsing/map_parsing_utils.c \
 			  src/parsing/map_validation.c \

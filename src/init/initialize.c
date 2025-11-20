@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 09:16:39 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/18 11:56:03 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:45:21 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,16 @@ t_game	*init_game(char *map_path)
 	game->ceiling_color = 0;
 	if (parse_map(map_path, game) == -1)
 	{
-		error_exit(game, "Error: Failed to parse map\n");
+		error_exit(game, "Error: Failed to parse map configuration\n");
 		return (NULL);
 	}
+	if (parse_map_grid(map_path, game) == -1)
+	{
+		error_exit(game, "Error: Failed to parse map grid\n");
+		return (NULL);
+	}
+	parse_color(game->map->floor, &game->floor_color);
+	parse_color(game->map->ceiling, &game->ceiling_color);
 	if (check_textures(game) == -1)
 		return (NULL);
 	if (validate_map(game) == -1)
