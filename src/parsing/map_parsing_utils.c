@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:50:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/18 13:39:25 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 10:51:57 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_line_empty(char *line)
 	while (line[i] && line[i] != '\n')
 	{
 		if (!valid_map_char(line[i]))
-			return (0);
+			return (-1);
 		if (line[i] != ' ')
 			found = 1;
 		i++;

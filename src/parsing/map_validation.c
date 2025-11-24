@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 19:55:36 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/18 13:41:09 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 10:39:13 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	check_map_char(t_game *game)
 	while (game->map->map[i])
 	{
 		j = 0;
-		while (game->map->map[j])
+		while (game->map->map[i][j])
 		{
 			if (!valid_map_char(game->map->map[i][j]))
 			{
@@ -49,7 +49,7 @@ static int	players(t_game *game, int *player_x, int *player_y)
 		while (game->map->map[i][j])
 		{
 			if (game->map->map[i][j] == 'N' || game->map->map[i][j] == 'W'
-				|| game->map->map[i][j] == 'S' || game->map->map[i][j] == 'R')
+				|| game->map->map[i][j] == 'S' || game->map->map[i][j] == 'E')
 			{
 				*player_x = j;
 				*player_y = i;

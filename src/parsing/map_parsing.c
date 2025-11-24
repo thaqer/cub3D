@@ -6,24 +6,32 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:11:47 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/18 13:39:23 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 10:54:55 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int	count_line(int fd)
+static int	count_line(int fd, t_game *game)
 {
 	char	*line;
 	int		start;
 	int		i;
+	int		result;
 
 	line = get_next_line(fd);
 	start = 0;
 	i = 0;
 	while (line)
 	{
-		if (is_line_empty(line))
+		result = is_line_empty(line);
+		if (result == -1 && start)
+		{
+			free(line);
+			error_exit(game, "Error: Invalid char in the map\n");
+			return (-1);
+		}
+		if (result > 0)
 		{
 			start = 1;
 			i++;
@@ -41,7 +49,16 @@ static int	count_line(int fd)
 
 static int	process_single_line(t_game *game, char *line, int *i, int *start)
 {
-	if (is_line_empty(line))
+	int	result;
+
+	result = is_line_empty(line);
+	if (result == -1 && *start)
+	{
+		free(line);
+		error_exit(game, "Error: Invalid char in the map\n");
+		return (-1);
+	}
+	if (result > 0)
 	{
 		*start = 1;
 		game->map->map[(*i)++] = copy_map_line(line);
@@ -101,11 +118,11 @@ int	parse_map_grid(char *map_path, t_game *game)
 	fd = open_file_checked(map_path, game);
 	if (fd < 0)
 		return (-1);
-	lines = count_line(fd);
+	lines = count_line(fd, game);
 	close(fd);
 	if (lines <= 0)
 	{
-		error_exit(game, "Error: Invalid or empty map\n");
+		//error_exit(game, "Error: Invalid or empty map\n"); //double free
 		return (-1);
 	}
 	fd = open_file_checked(map_path, game);

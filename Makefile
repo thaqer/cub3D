@@ -29,6 +29,7 @@ SRCS		= src/main.c \
 			  src/parsing/map_parsing.c \
 			  src/parsing/map_parsing_utils.c \
 			  src/parsing/map_validation.c \
+			  src/parsing/color_validation.c \
 			  src/parsing/textures_validation.c
 
 OBJS		= $(SRCS:%.c=$(objDir)/%.o)

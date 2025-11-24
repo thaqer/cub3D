@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 16:02:09 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/17 20:23:32 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 10:27:42 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,4 @@ void	parse_color(char *color_str, uint32_t *color)
 	free(rgb_parts[2]);
 	free(rgb_parts);
 }
+

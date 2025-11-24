@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/18 13:39:44 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 10:37:09 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int32_t			test_mlx_functions(t_game *game);
 t_game			*init_game(char *map_path);
 void			init_player(t_game *game);
 uint32_t		rgb_to_uint32(int r, int g, int b);
+void			ft_free_split(char **split);
 
 // init_utils.c 
 t_game			*malloc_init(t_game *game);
@@ -146,6 +147,9 @@ int				error_exit(t_game *game, char *message);
 // map_validation.c 
 int				validate_map(t_game *game);
 
+// color_validation.c
+int				validate_colors(t_game *game);
+
 // textures_validation.c
 int				check_textures(t_game *game);
 
@@ -158,5 +162,6 @@ void			draw_floor_ceiling(t_game *game);
 void			perform_dda(t_game *game, t_ray *ray);
 void			calculate_wall_distance(t_ray *ray);
 void			draw_wall(t_game *game, t_ray *ray, int x);
+
 
 #endif

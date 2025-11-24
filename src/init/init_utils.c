@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaniatt <tbaniatt@student.42.fr>          #+#  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-11-15 16:50:19 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025-11-15 16:50:19 by tbaniatt         ###   ########.fr       */
+/*   Created: 2025/11/15 16:50:19 by tbaniatt          #+#    #+#             */
+/*   Updated: 2025/11/24 10:28:01 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,18 @@ t_game	*malloc_init(t_game *game)
 	if (!game->player)
 		return (error_init(game, "Error: allocate memory for player\n"));
 	return (game);
+}
+void	ft_free_split(char **split)
+{
+	int	i;
+
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }
