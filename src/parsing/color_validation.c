@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:38:09 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/24 20:05:34 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 20:59:37 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	validate_rgb(char *value)
 	return (num);
 }
 
-// Parses RGB color string into individual R, G, B values 
+// Parses RGB color string into individual R, G, B values
 int	parse_rgb(char *color_str, int *r, int *g, int *b)
 {
 	char	**rgb;
@@ -82,7 +82,6 @@ int	parse_rgb(char *color_str, int *r, int *g, int *b)
 	return (result);
 }
 
-// Validates floor and ceiling colors
 int	validate_colors(t_game *game)
 {
 	int	r;
@@ -90,14 +89,14 @@ int	validate_colors(t_game *game)
 	int	b;
 
 	if (parse_rgb(game->map->floor, &r, &g, &b) == -1)
-    {
-        error_exit(game, "Error: Invalid floor color format\n");
+	{
+		error_exit(game, "Error: Invalid floor color format\n");
 		return (-1);
-    }
+	}
 	if (parse_rgb(game->map->ceiling, &r, &g, &b) == -1)
-    {
-        error_exit(game, "Error: Invalid ceiling color format\n");
+	{
+		error_exit(game, "Error: Invalid ceiling color format\n");
 		return (-1);
-    }
+	}
 	return (0);
 }

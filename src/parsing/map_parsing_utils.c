@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:50:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/24 14:05:21 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 20:53:18 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	open_file_checked(char *path, t_game *game)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		return (error_exit(game, "Error: Unable to open map file\n"));
+		error_exit(game, "Error: Unable to open map file\n");
+		return (-1);
 	}
 	return (fd);
 }

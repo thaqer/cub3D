@@ -6,41 +6,47 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:11:47 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/24 20:10:35 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 20:45:14 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int	count_line(int fd, t_game *game)
+static int	handle_line_error(char *line, int result, int start)
+{
+	if (result == -1 && start)
+	{
+		free(line);
+		ft_putstr_fd("Error: Invalid char in the map\n", 2);
+		return (-1);
+	}
+	if (start && line[0] != '\n' && result <= 0)
+	{
+		free(line);
+		return (-1);
+	}
+	return (0);
+}
+
+static int	count_line(int fd)
 {
 	char	*line;
 	int		start;
 	int		i;
 	int		result;
 
-	(void)game;
 	line = get_next_line(fd);
 	start = 0;
 	i = 0;
 	while (line)
 	{
 		result = is_line_empty(line);
-		if (result == -1 && start)
-		{
-			free(line);
-			ft_putstr_fd("Error: Invalid char in the map\n", 2);
+		if (handle_line_error(line, result, start) == -1)
 			return (-1);
-		}
 		if (result > 0)
 		{
 			start = 1;
 			i++;
-		}
-		else if (start && line[0] != '\n')
-		{
-			free(line);
-			return (-1);
 		}
 		free(line);
 		line = get_next_line(fd);
@@ -50,16 +56,14 @@ static int	count_line(int fd, t_game *game)
 
 static int	process_single_line(t_game *game, char *line, int *i, int *start)
 {
-	int	result;
-
-	result = is_line_empty(line);
-	if (result == -1 && *start)
+	game->result = is_line_empty(line);
+	if (game->result == -1 && *start)
 	{
 		free(line);
 		ft_putstr_fd("Error: Invalid char in the map\n", 2);
 		return (-1);
 	}
-	if (result > 0)
+	if (game->result > 0)
 	{
 		*start = 1;
 		game->map->map[(*i)++] = copy_map_line(line);
@@ -113,7 +117,7 @@ static int	read_map(t_game *game, int fd, int lines)
 		ft_free_split(game->map->map);
 		return (-1);
 	}
-	return (0);	
+	return (0);
 }
 
 int	parse_map_grid(char *map_path, t_game *game)
@@ -124,13 +128,10 @@ int	parse_map_grid(char *map_path, t_game *game)
 	fd = open_file_checked(map_path, game);
 	if (fd < 0)
 		return (-1);
-	lines = count_line(fd, game);
+	lines = count_line(fd);
 	close(fd);
 	if (lines <= 0)
-	{
-		// error_exit(game, "Error: Invalid or empty map\n");
 		return (-1);
-	}
 	fd = open_file_checked(map_path, game);
 	if (fd < 0)
 		return (-1);

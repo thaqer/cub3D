@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 19:55:36 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/24 10:39:13 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 21:01:42 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ static int	is_correct_position(t_game *game, int x, int y)
 	row_len = ft_strlen(game->map->map[y]);
 	if (x == 0 || x == row_len - 1)
 		return (0);
-	if (y > 0 && (x >= (int)ft_strlen(game->map->map[y - 1])
-			|| game->map->map[y - 1][x] == ' '))
+	if (y > 0 && (x >= (int)ft_strlen(game->map->map[y - 1]) || game->map->map[y
+				- 1][x] == ' '))
 		return (0);
 	if (y < total_rows - 1 && (x >= (int)ft_strlen(game->map->map[y + 1])
 			|| game->map->map[y + 1][x] == ' '))

@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/24 19:37:50 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 20:42:32 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef struct s_ray
 	int			draw_start;
 	int			draw_end;
 	int			wall_dir;
+	double		tex_pos;
+	double		step;
 }				t_ray;
 
 typedef struct s_map
@@ -103,6 +105,9 @@ typedef struct s_game
 	uint32_t	ceiling_color;
 	double		mouse_x;
 	double		mouse_y;
+	char		*color_str;
+	char		type;
+	int			result;
 
 }				t_game;
 
