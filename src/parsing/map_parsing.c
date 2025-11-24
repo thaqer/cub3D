@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:11:47 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/24 10:54:55 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:26:33 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	count_line(int fd, t_game *game)
 	int		i;
 	int		result;
 
+	(void)game;
 	line = get_next_line(fd);
 	start = 0;
 	i = 0;
@@ -28,7 +29,7 @@ static int	count_line(int fd, t_game *game)
 		if (result == -1 && start)
 		{
 			free(line);
-			error_exit(game, "Error: Invalid char in the map\n");
+			ft_putstr_fd("Error: Invalid char in the map\n", 2);
 			return (-1);
 		}
 		if (result > 0)
@@ -55,7 +56,7 @@ static int	process_single_line(t_game *game, char *line, int *i, int *start)
 	if (result == -1 && *start)
 	{
 		free(line);
-		error_exit(game, "Error: Invalid char in the map\n");
+		ft_putstr_fd("Error: Invalid char in the map\n", 2);
 		return (-1);
 	}
 	if (result > 0)
@@ -65,14 +66,14 @@ static int	process_single_line(t_game *game, char *line, int *i, int *start)
 		if (!game->map->map[*i - 1])
 		{
 			free(line);
-			error_exit(game, "Error: Memory allocation failed\n");
+			ft_putstr_fd("Error: Memory allocation failed\n", 2);
 			return (-1);
 		}
 	}
 	else if (*start && line[0] != '\n')
 	{
 		free(line);
-		error_exit(game, "Error: Invalid map format\n");
+		ft_putstr_fd("Error: Invalid map format\n", 2);
 		return (-1);
 	}
 	return (0);
@@ -103,11 +104,16 @@ static int	read_map(t_game *game, int fd, int lines)
 	game->map->map = malloc(sizeof(char *) * (lines + 1));
 	if (!game->map->map)
 	{
-		error_exit(game, "Error: Memory allocation failed\n");
+		ft_putstr_fd("Error: Memory allocation failed\n", 2);
 		return (-1);
 	}
 	line = get_next_line(fd);
-	return (process_map_lines(game, fd, line, lines));
+	if (process_map_lines(game, fd, line, lines) == -1)
+	{
+		ft_free_split(game->map->map);
+		return (-1);
+	}
+	return (0);	
 }
 
 int	parse_map_grid(char *map_path, t_game *game)
@@ -122,7 +128,7 @@ int	parse_map_grid(char *map_path, t_game *game)
 	close(fd);
 	if (lines <= 0)
 	{
-		//error_exit(game, "Error: Invalid or empty map\n"); //double free
+		// error_exit(game, "Error: Invalid or empty map\n");
 		return (-1);
 	}
 	fd = open_file_checked(map_path, game);

@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:13:45 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/17 20:28:15 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 19:42:57 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int run_game(t_game *game)
 	game->textures->east = mlx_load_png(game->map->east);
 	if (!game->textures->east)
 		return (error_exit(game, "Error: Failed to load east texture\n"));
+	game->textures->cloud = mlx_load_png("./textures/clouds.png");//cloud
+	if (!game->textures->cloud)//
+		return (error_exit(game, "Error: Failed to load cloud texture\n"));//
 	mlx_image_to_window(game->mlx, game->img, 0, 0);
 	init_mouse(game);
 	mlx_loop_hook(game->mlx, &game_loop, game);
@@ -146,9 +149,59 @@ void	cast_rays(void *param)
 	}
 }
 
+static void	draw_textured_ceiling(t_game *game, int x, int y)
+{
+	uint8_t		*texture_bytes; //cloud
+	uint32_t	color;
+	int			tex_x;
+	int			tex_y;
+	double		angle;
+	int			pixel_index;//cloud
+
+	if (!game->textures->cloud)
+	{
+		mlx_put_pixel(game->img, x, y, game->ceiling_color);
+		return;
+	}
+	
+	texture_bytes = game->textures->cloud->pixels;//cloud
+	
+	// Simple skybox - based on viewing angle only
+	angle = atan2(game->player->dir_y, game->player->dir_x);
+	
+	// Convert angle to texture X coordinate (wraps around 360 degrees)
+	tex_x = (int)((angle / (2.0 * 3.14159265359) + 0.5) * game->textures->cloud->width);
+	tex_x = (tex_x + (x * game->textures->cloud->width) / WINDOW_WIDTH) % game->textures->cloud->width;
+	
+	// Y coordinate based on screen Y position
+	tex_y = (y * game->textures->cloud->height) / (WINDOW_HEIGHT / 2);
+	
+	// Ensure we're within bounds
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= (int)game->textures->cloud->width)
+		tex_x = game->textures->cloud->width - 1;
+	if (tex_y < 0)
+		tex_y = 0;
+	if (tex_y >= (int)game->textures->cloud->height)
+		tex_y = game->textures->cloud->height - 1;
+	
+	// Get pixel index (RGBA = 4 bytes per pixel) //cloud
+	pixel_index = (tex_y * game->textures->cloud->width + tex_x) * 4;
+	
+	// MLX42 expects RGBA format, construct color from bytes
+	color = (texture_bytes[pixel_index] << 24) |      // R
+			(texture_bytes[pixel_index + 1] << 16) |  // G
+			(texture_bytes[pixel_index + 2] << 8) |   // B
+			texture_bytes[pixel_index + 3];           // A//cloud
+	
+	mlx_put_pixel(game->img, x, y, color);
+}
+
 void	draw_floor_ceiling(t_game *game)
 {
-	int	x, y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < WINDOW_HEIGHT)
@@ -157,7 +210,7 @@ void	draw_floor_ceiling(t_game *game)
 		while (x < WINDOW_WIDTH)
 		{
 			if (y < WINDOW_HEIGHT / 2)
-				mlx_put_pixel(game->img, x, y, game->ceiling_color);
+				draw_textured_ceiling(game, x, y);
 			else
 				mlx_put_pixel(game->img, x, y, game->floor_color);
 			x++;

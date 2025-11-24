@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 09:16:39 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/24 10:52:47 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 19:38:17 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	init_textures_struct(t_textures *textures)
 	textures->south = NULL;
 	textures->west = NULL;
 	textures->east = NULL;
+	textures->cloud = NULL;
 }
 
 t_game	*init_game(char *map_path)

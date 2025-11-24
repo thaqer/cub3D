@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 16:50:19 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/24 10:28:01 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:07:42 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,38 @@ t_game	*malloc_init(t_game *game)
 {
 	game = malloc(sizeof(t_game));
 	if (!game)
-		return (error_init(NULL, "Error: allocate memory for game\n"));
+	{
+		error_init(NULL, "Error: allocate memory for game\n");
+		return (NULL);
+	}
 	game->mlx = NULL;
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
-		return (error_init(game, "Error: allocate memory for map\n"));
+	{
+		error_init(game, "Error: allocate memory for map\n");
+		return (NULL);
+	}
 	game->flags = malloc(sizeof(t_flags));
 	if (!game->flags)
-		return (error_init(game, "Error: allocate memory for flags\n"));
+	{
+		error_init(game, "Error: allocate memory for flags\n");
+		return (NULL);
+	}
 	game->textures = malloc(sizeof(t_textures));
 	if (!game->textures)
-		return (error_init(game, "Error: allocate memory for textures\n"));
+	{
+		error_init(game, "Error: allocate memory for textures\n");
+		return (NULL);
+	}
 	game->player = malloc(sizeof(t_player));
 	if (!game->player)
-		return (error_init(game, "Error: allocate memory for player\n"));
+	{
+		error_init(game, "Error: allocate memory for player\n");
+		return (NULL);
+	}
 	return (game);
 }
+
 void	ft_free_split(char **split)
 {
 	int	i;

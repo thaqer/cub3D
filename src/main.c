@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaniatt <tbaniatt@student.42.fr>          #+#  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-11-10 16:02:20 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025-11-10 16:02:20 by tbaniatt         ###   ########.fr       */
+/*   Created: 2025/11/10 16:02:20 by tbaniatt          #+#    #+#             */
+/*   Updated: 2025/11/24 14:07:42 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,15 @@ int	main(int argc, char **argv)
 	t_game	*game;
 
 	if (argc != 2)
-		return (error_exit(NULL, "Error: Invalid number of arguments\n"));
+	{
+		error_exit(NULL, "Error: Invalid number of arguments\n");
+		return (1);
+	}
 	if (!validate_file_extension(argv[1]))
-		return (error_exit(NULL, "Error: File must have .cub extension\n"));
+	{
+		error_exit(NULL, "Error: Invalid file extension\n");
+		return (1);
+	}
 	game = init_game(argv[1]);
 	if (!game)
 		return (1);

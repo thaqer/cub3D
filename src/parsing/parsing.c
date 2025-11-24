@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:32:37 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/20 14:45:21 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:29:30 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ static int	parse_wall_texture(char *line, t_game *game)
 	path = line;
 	while (!ft_white_space(*line) && *line != '\0')
 		line++;
-	return (set_wall_texture(line, game, path, dir));
+	if (set_wall_texture(line, game, path, dir) == -1)
+	{
+		return (-1);
+	}
+	return (0);
 }
 
 static int	parse_color_line(char *line, t_game *game)

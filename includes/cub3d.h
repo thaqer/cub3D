@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/24 10:37:09 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/24 19:37:50 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_textures
 	mlx_texture_t	*south;
 	mlx_texture_t	*west;
 	mlx_texture_t	*east;
+	mlx_texture_t	*cloud; //cloud
 }				t_textures;
 
 typedef struct s_player

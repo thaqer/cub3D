@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaniatt <tbaniatt@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 12:25:26 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/15 00:10:39 by tbaniatt         ###   ########.fr       */
+/*   Updated: 2025/11/24 19:38:28 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	free_textures(t_textures *textures)
 			mlx_delete_texture(textures->west);
 		if (textures->east)
 			mlx_delete_texture(textures->east);
+		if (textures->cloud)//cloud
+			mlx_delete_texture(textures->cloud);//cloud
 		free(textures);
 	}
 }
