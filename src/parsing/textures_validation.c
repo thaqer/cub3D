@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:33:42 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/18 14:04:50 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 21:25:00 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	validate_texture(char *path)
 	if (!path)
 		return (0);
 	if (!is_png(path))
-		return (0);
+		return (3);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
@@ -44,24 +44,20 @@ static int	validate_texture(char *path)
 int	check_textures(t_game *game)
 {
 	if (!validate_texture(game->map->north))
-	{
-		error_exit(game, "Error: Invalid north texture path\n");
-		return (-1);
-	}
+		return (error_exit(game, "Error: Invalid north texture path\n"));
+	else if (validate_texture(game->map->north) == 3)
+		return (error_exit(game, "Error: North texture is not a .png file\n"));
 	if (!validate_texture(game->map->south))
-	{
-		error_exit(game, "Error: Invalid south texture path\n");
-		return (-1);
-	}
+		return (error_exit(game, "Error: Invalid south texture path\n"));
+	else if (validate_texture(game->map->south) == 3)
+		return (error_exit(game, "Error: South texture is not a .png file\n"));
 	if (!validate_texture(game->map->west))
-	{
-		error_exit(game, "Error: Invalid west texture path\n");
-		return (-1);
-	}
+		return (error_exit(game, "Error: Invalid west texture path\n"));
+	else if (validate_texture(game->map->west) == 3)
+		return (error_exit(game, "Error: West texture is not a .png file\n"));
 	if (!validate_texture(game->map->east))
-	{
-		error_exit(game, "Error: Invalid east texture path\n");
-		return (-1);
-	}
+		return (error_exit(game, "Error: Invalid east texture path\n"));
+	else if (validate_texture(game->map->east) == 3)
+		return (error_exit(game, "Error: East texture is not a .png file\n"));
 	return (0);
 }

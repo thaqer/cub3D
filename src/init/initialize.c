@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 09:16:39 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 19:22:51 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 21:04:22 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static int	validate_game_data(char *map_path, t_game *game)
 	parse_color(game->map->ceiling, &game->ceiling_color);
 	if (validate_colors(game) == -1)
 		return (-1);
-	if (check_textures(game) == -1)
-		return (-1);
 	if (validate_map(game) == -1)
+		return (-1);
+	if (check_textures(game) == -1)
 		return (-1);
 	return (0);
 }
