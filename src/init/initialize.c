@@ -6,33 +6,11 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 09:16:39 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/24 19:38:17 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:22:51 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-static void	init_map_struct(t_map *map)
-{
-	map->north = NULL;
-	map->south = NULL;
-	map->west = NULL;
-	map->east = NULL;
-	map->floor[0] = '\0';
-	map->ceiling[0] = '\0';
-	map->map = NULL;
-}
-
-static void	init_flags_struct(t_flags *flags)
-{
-	flags->wall_north = 0;
-	flags->wall_south = 0;
-	flags->wall_west = 0;
-	flags->wall_east = 0;
-	flags->floor = 0;
-	flags->ceiling = 0;
-	flags->map = 0;
-}
 
 static void	init_textures_struct(t_textures *textures)
 {
@@ -41,6 +19,23 @@ static void	init_textures_struct(t_textures *textures)
 	textures->west = NULL;
 	textures->east = NULL;
 	textures->cloud = NULL;
+}
+
+static int	validate_game_data(char *map_path, t_game *game)
+{
+	if (parse_map(map_path, game) == -1)
+		return (-1);
+	if (parse_map_grid(map_path, game) == -1)
+		return (-1);
+	parse_color(game->map->floor, &game->floor_color);
+	parse_color(game->map->ceiling, &game->ceiling_color);
+	if (validate_colors(game) == -1)
+		return (-1);
+	if (check_textures(game) == -1)
+		return (-1);
+	if (validate_map(game) == -1)
+		return (-1);
+	return (0);
 }
 
 t_game	*init_game(char *map_path)
@@ -58,23 +53,7 @@ t_game	*init_game(char *map_path)
 	game->img = NULL;
 	game->floor_color = 0;
 	game->ceiling_color = 0;
-	if (parse_map(map_path, game) == -1)
-	{
-		// error_exit(game, "Error: Failed to parse map configuration\n"); //double free
-		return (NULL);
-	}
-	if (parse_map_grid(map_path, game) == -1)
-	{
-		// error_exit(game, "Error: Failed to parse map grid\n"); // double free
-		return (NULL);
-	}
-	parse_color(game->map->floor, &game->floor_color);
-	parse_color(game->map->ceiling, &game->ceiling_color);
-	if (validate_colors(game) == -1)
-		return (NULL);
-	if (check_textures(game) == -1)
-		return (NULL);
-	if (validate_map(game) == -1)
+	if (validate_game_data(map_path, game) == -1)
 		return (NULL);
 	init_player(game);
 	print_game_info(game);

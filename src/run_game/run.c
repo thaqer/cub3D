@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:13:45 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 18:56:41 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:13:57 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ int	run_game(t_game *game)
 	game->textures->east = mlx_load_png(game->map->east);
 	if (!game->textures->east)
 		return (error_exit(game, "Error: Failed to load east texture\n"));
-	game->textures->cloud = mlx_load_png("./textures/clouds.png");         
-		//cloud
-	if (!game->textures->cloud)                                             //
-		return (error_exit(game, "Error: Failed to load cloud texture\n")); //
+	game->textures->cloud = mlx_load_png("./textures/clouds.png");
+	if (!game->textures->cloud)
+		return (error_exit(game, "Error: Failed to load cloud texture\n"));
 	mlx_image_to_window(game->mlx, game->img, 0, 0);
 	init_mouse(game);
 	mlx_loop_hook(game->mlx, &game_loop, game);

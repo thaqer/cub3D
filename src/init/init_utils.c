@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 16:50:19 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/24 14:07:42 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:35:24 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,22 @@ t_game	*malloc_init(t_game *game)
 	game = malloc(sizeof(t_game));
 	if (!game)
 	{
-		error_init(NULL, "Error: allocate memory for game\n");
+		return (error_init(NULL, "Error: allocate memory for game\n"));
 		return (NULL);
 	}
 	game->mlx = NULL;
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
-	{
-		error_init(game, "Error: allocate memory for map\n");
-		return (NULL);
-	}
+		return (error_init(game, "Error: allocate memory for map\n"));
 	game->flags = malloc(sizeof(t_flags));
 	if (!game->flags)
-	{
-		error_init(game, "Error: allocate memory for flags\n");
-		return (NULL);
-	}
+		return (error_init(game, "Error: allocate memory for flags\n"));
 	game->textures = malloc(sizeof(t_textures));
 	if (!game->textures)
-	{
-		error_init(game, "Error: allocate memory for textures\n");
-		return (NULL);
-	}
+		return (error_init(game, "Error: allocate memory for textures\n"));
 	game->player = malloc(sizeof(t_player));
 	if (!game->player)
-	{
-		error_init(game, "Error: allocate memory for player\n");
-		return (NULL);
-	}
+		return (error_init(game, "Error: allocate memory for player\n"));
 	return (game);
 }
 
@@ -67,4 +55,26 @@ void	ft_free_split(char **split)
 		i++;
 	}
 	free(split);
+}
+
+void	init_map_struct(t_map *map)
+{
+	map->north = NULL;
+	map->south = NULL;
+	map->west = NULL;
+	map->east = NULL;
+	map->floor[0] = '\0';
+	map->ceiling[0] = '\0';
+	map->map = NULL;
+}
+
+void	init_flags_struct(t_flags *flags)
+{
+	flags->wall_north = 0;
+	flags->wall_south = 0;
+	flags->wall_west = 0;
+	flags->wall_east = 0;
+	flags->floor = 0;
+	flags->ceiling = 0;
+	flags->map = 0;
 }

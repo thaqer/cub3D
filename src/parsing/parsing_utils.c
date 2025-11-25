@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 20:52:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/25 18:42:41 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:12:12 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,18 +85,17 @@ int	parse_color_line(char *line, t_game *game)
 		line++;
 	if (game->type == 'F' && !game->flags->floor)
 	{
-		ft_strlcpy(game->map->floor, game->color_str, line - game->color_str + 1);
+		ft_strlcpy(game->map->floor, game->color_str, line - game->color_str
+			+ 1);
 		game->flags->floor = 1;
 	}
 	else if (game->type == 'C' && !game->flags->ceiling)
 	{
-		ft_strlcpy(game->map->ceiling, game->color_str, line - game->color_str + 1);
+		ft_strlcpy(game->map->ceiling, game->color_str, line - game->color_str
+			+ 1);
 		game->flags->ceiling = 1;
 	}
 	else
-	{
-		error_exit(game, "Error: Duplicate or invalid color\n");
-		return (-1);
-	}
+		return (error_exit(game, "Error: Duplicate or invalid color\n"));
 	return (0);
 }

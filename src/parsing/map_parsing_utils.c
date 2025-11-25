@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:50:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/24 20:53:18 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:11:51 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,20 @@ int	open_file_checked(char *path, t_game *game)
 		return (-1);
 	}
 	return (fd);
+}
+
+int	handle_line_error(char *line, int result, int start)
+{
+	if (result == -1 && start)
+	{
+		free(line);
+		ft_putstr_fd("Error: Invalid char in the map\n", 2);
+		return (-1);
+	}
+	if (start && line[0] != '\n' && result <= 0)
+	{
+		free(line);
+		return (-1);
+	}
+	return (0);
 }

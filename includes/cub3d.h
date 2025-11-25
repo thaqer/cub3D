@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 18:52:28 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:41:13 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_textures
 	mlx_texture_t	*south;
 	mlx_texture_t	*west;
 	mlx_texture_t	*east;
-	mlx_texture_t	*cloud; //cloud
+	mlx_texture_t	*cloud;
 }				t_textures;
 
 typedef struct s_player
@@ -129,9 +129,12 @@ void			ft_free_split(char **split);
 t_game			*malloc_init(t_game *game);
 int				parse_color_line(char *line, t_game *game);
 void			parse_color(char *color_str, uint32_t *color);
+void			init_map_struct(t_map *map);
+void			init_flags_struct(t_flags *flags);
 
 // map_parsing.c
 int				parse_map_grid(char *map_path, t_game *game);
+int				handle_line_error(char *line, int result, int start);
 
 // map_parsing_utils.c
 int				valid_map_char(char c);
