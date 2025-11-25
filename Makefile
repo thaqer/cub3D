@@ -25,6 +25,7 @@ SRCS		= src/main.c \
 			  src/end/end.c \
 			  src/debugging.c \
 			  src/utils/init_utils.c \
+			  src/parsing/parsing_utils.c\
 			  src/parsing/parsing.c \
 			  src/parsing/map_parsing.c \
 			  src/parsing/map_parsing_utils.c \

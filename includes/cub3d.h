@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/24 20:42:32 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:52:28 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void			ft_free_split(char **split);
 
 // init_utils.c 
 t_game			*malloc_init(t_game *game);
+int				parse_color_line(char *line, t_game *game);
 void			parse_color(char *color_str, uint32_t *color);
 
 // map_parsing.c
@@ -144,8 +145,10 @@ void			init_mouse(t_game *game);
 
 // parsing.c 
 int				parse_map(char *map_path, t_game *game);
-
-
+int				process_map_line(char *line, t_game *game, int fd);
+int				all_elements_parsed(t_flags *flags);
+int				parse_wall_texture(char *line, t_game *game);
+int				ft_white_space(char c);
 // end.c 
 void			free_game(t_game *game);
 int				error_exit(t_game *game, char *message);

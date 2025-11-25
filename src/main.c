@@ -42,6 +42,6 @@ int	main(int argc, char **argv)
 	if (!game)
 		return (1);
 	if (run_game(game) == -1)
-		return (1);	
+		return (1);
 	return (0);
 }

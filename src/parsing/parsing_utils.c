@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 20:52:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/24 22:08:46 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:42:41 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,39 +97,6 @@ int	parse_color_line(char *line, t_game *game)
 	{
 		error_exit(game, "Error: Duplicate or invalid color\n");
 		return (-1);
-	}
-	return (0);
-}
-
-int	all_elements_parsed(t_flags *flags)
-{
-	if (flags->wall_north && flags->wall_south
-		&& flags->wall_west && flags->wall_east
-		&& flags->floor && flags->ceiling)
-		return (1);
-	return (0);
-}
-
-int	process_map_line(char *line, t_game *game, int fd)
-{
-	if (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
-		|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0)
-	{
-		if (parse_wall_texture(line, game) == -1)
-		{
-			free(line);
-			close(fd);
-			return (-1);
-		}
-	}
-	else if (ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0)
-	{
-		if (parse_color_line(line, game) == -1)
-		{
-			free(line);
-			close(fd);
-			return (-1);
-		}
 	}
 	return (0);
 }
