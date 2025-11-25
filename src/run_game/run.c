@@ -6,13 +6,13 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:13:45 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 19:13:57 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:56:41 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	run_game(t_game *game)
+int	load_images(t_game *game)
 {
 	game->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", false);
 	if (!game->mlx)
@@ -35,6 +35,13 @@ int	run_game(t_game *game)
 	game->textures->cloud = mlx_load_png("./textures/clouds.png");
 	if (!game->textures->cloud)
 		return (error_exit(game, "Error: Failed to load cloud texture\n"));
+	return (1);
+}
+
+int	run_game(t_game *game)
+{
+	if (load_images(game) != 1)
+		return (-1);
 	mlx_image_to_window(game->mlx, game->img, 0, 0);
 	init_mouse(game);
 	mlx_loop_hook(game->mlx, &game_loop, game);
@@ -119,6 +126,31 @@ static void	handle_sliding_move(t_game *game, double new_x, double new_y)
 	}
 }
 
+void	handle_player_movement_util(t_game *game, double move_speed
+										, double *new_x, double *new_y)
+{
+	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+	{
+		*new_x = game->player->x + game->player->dir_x * move_speed;
+		*new_y = game->player->y + game->player->dir_y * move_speed;
+	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+	{
+		*new_x = game->player->x - game->player->dir_x * move_speed;
+		*new_y = game->player->y - game->player->dir_y * move_speed;
+	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+	{
+		*new_x = game->player->x - game->player->dir_y * move_speed;
+		*new_y = game->player->y + game->player->dir_x * move_speed;
+	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+	{
+		*new_x = game->player->x + game->player->dir_y * move_speed;
+		*new_y = game->player->y - game->player->dir_x * move_speed;
+	}
+}
+
 static void	handle_player_movement(t_game *game)
 {
 	double	move_speed;
@@ -129,30 +161,8 @@ static void	handle_player_movement(t_game *game)
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT_SHIFT)
 		|| mlx_is_key_down(game->mlx, MLX_KEY_RIGHT_SHIFT))
 		move_speed *= 2;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
-	{
-		new_x = game->player->x + game->player->dir_x * move_speed;
-		new_y = game->player->y + game->player->dir_y * move_speed;
-		handle_sliding_move(game, new_x, new_y);
-	}
-	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
-	{
-		new_x = game->player->x - game->player->dir_x * move_speed;
-		new_y = game->player->y - game->player->dir_y * move_speed;
-		handle_sliding_move(game, new_x, new_y);
-	}
-	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
-	{
-		new_x = game->player->x - game->player->dir_y * move_speed;
-		new_y = game->player->y + game->player->dir_x * move_speed;
-		handle_sliding_move(game, new_x, new_y);
-	}
-	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
-	{
-		new_x = game->player->x + game->player->dir_y * move_speed;
-		new_y = game->player->y - game->player->dir_x * move_speed;
-		handle_sliding_move(game, new_x, new_y);
-	}
+	handle_player_movement_util(game, move_speed, &new_x, &new_y);
+	handle_sliding_move(game, new_x, new_y);
 }
 
 static void	rotate_player(t_game *game, double rot_speed)
@@ -239,25 +249,21 @@ static void	draw_textured_ceiling(t_game *game, int x, int y)
 	int			tex_x;
 	int			tex_y;
 	double		angle;
+	uint8_t		*texture_bytes;
+	int			pixel_index;
 
-	uint8_t *texture_bytes; //cloud
-	int pixel_index; //cloud
 	if (!game->textures->cloud)
 	{
 		mlx_put_pixel(game->img, x, y, game->ceiling_color);
 		return ;
 	}
-	texture_bytes = game->textures->cloud->pixels; //cloud
-	// Simple skybox - based on viewing angle only
+	texture_bytes = game->textures->cloud->pixels;
 	angle = atan2(game->player->dir_y, game->player->dir_x);
-	// Convert angle to texture X coordinate (wraps around 360 degrees)
 	tex_x = (int)((angle / (2.0 * 3.14159265359) + 0.5)
 			* game->textures->cloud->width);
 	tex_x = (tex_x + (x * game->textures->cloud->width) / WINDOW_WIDTH)
 		% game->textures->cloud->width;
-	// Y coordinate based on screen Y position
 	tex_y = (y * game->textures->cloud->height) / (WINDOW_HEIGHT / 2);
-	// Ensure we're within bounds
 	if (tex_x < 0)
 		tex_x = 0;
 	if (tex_x >= (int)game->textures->cloud->width)
@@ -266,13 +272,11 @@ static void	draw_textured_ceiling(t_game *game, int x, int y)
 		tex_y = 0;
 	if (tex_y >= (int)game->textures->cloud->height)
 		tex_y = game->textures->cloud->height - 1;
-	// Get pixel index (RGBA = 4 bytes per pixel) //cloud
 	pixel_index = (tex_y * game->textures->cloud->width + tex_x) * 4;
-	// MLX42 expects RGBA format, construct color from bytes
-	color = (texture_bytes[pixel_index] << 24) | // R
-		(texture_bytes[pixel_index + 1] << 16) | // G
-		(texture_bytes[pixel_index + 2] << 8) |  // B
-		texture_bytes[pixel_index + 3];          // A//cloud
+	color = (texture_bytes[pixel_index] << 24)
+		| (texture_bytes[pixel_index + 1] << 16)
+		| (texture_bytes[pixel_index + 2] << 8)
+		| texture_bytes[pixel_index + 3];
 	mlx_put_pixel(game->img, x, y, color);
 }
 
@@ -288,66 +292,15 @@ void	draw_floor_ceiling(t_game *game)
 		while (x < WINDOW_WIDTH)
 		{
 			if (y < WINDOW_HEIGHT / 2)
+			{
+				mlx_put_pixel(game->img, x, y, game->ceiling_color);
 				draw_textured_ceiling(game, x, y);
+			}
 			else
 				mlx_put_pixel(game->img, x, y, game->floor_color);
 			x++;
 		}
 		y++;
-	}
-}
-
-void	perform_dda(t_game *game, t_ray *ray)
-{
-	if (ray->ray_dir_x < 0)
-	{
-		ray->step_x = -1;
-		ray->side_dist_x = (game->player->x - ray->map_x) * ray->delta_dist_x;
-	}
-	else
-	{
-		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - game->player->x)
-			* ray->delta_dist_x;
-	}
-	if (ray->ray_dir_y < 0)
-	{
-		ray->step_y = -1;
-		ray->side_dist_y = (game->player->y - ray->map_y) * ray->delta_dist_y;
-	}
-	else
-	{
-		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - game->player->y)
-			* ray->delta_dist_y;
-	}
-	ray->hit = 0;
-	while (ray->hit == 0)
-	{
-		if (ray->side_dist_x < ray->side_dist_y)
-		{
-			ray->side_dist_x += ray->delta_dist_x;
-			ray->map_x += ray->step_x;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->side_dist_y += ray->delta_dist_y;
-			ray->map_y += ray->step_y;
-			ray->side = 1;
-		}
-		if (ray->map_x < 0 || ray->map_y < 0 || !game->map->map[ray->map_y])
-		{
-			ray->hit = 1;
-			break ;
-		}
-		if (game->map->map[ray->map_y][ray->map_x] == '\0')
-		{
-			ray->hit = 1;
-			break ;
-		}
-		if (game->map->map[ray->map_y][ray->map_x] == '1')
-			ray->hit = 1;
 	}
 }
 
@@ -431,7 +384,8 @@ static void	render_wall_column(t_game *game, t_ray *ray, int x, int tex_x)
 			tex_y = texture->height - 1;
 		ray->tex_pos += ray->step;
 		pixel = &texture->pixels[(tex_y * texture->width + tex_x) * 4];
-		color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
+		color = (pixel[0] << 24) | (pixel[1] << 16)
+			| (pixel[2] << 8) | pixel[3];
 		mlx_put_pixel(game->img, x, y, color);
 	}
 }
