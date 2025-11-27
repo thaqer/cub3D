@@ -56,9 +56,9 @@ t_game	*init_game(char *map_path)
 	if (validate_game_data(map_path, game) == -1)
 		return (NULL);
 	init_player(game);
-	print_game_info(game);
 	return (game);
 }
+// print_game_info(game);
 
 static void	player_direction(t_game *game, char player_dir)
 {

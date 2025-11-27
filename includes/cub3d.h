@@ -174,6 +174,8 @@ void			draw_floor_ceiling(t_game *game);
 void			perform_dda(t_game *game, t_ray *ray);
 void			calculate_wall_distance(t_ray *ray);
 void			draw_wall(t_game *game, t_ray *ray, int x);
+void			handle_sliding_move(t_game *game, double new_x, double new_y);
+
 
 
 #endif

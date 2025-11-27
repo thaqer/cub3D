@@ -21,8 +21,12 @@ SRCS		= src/main.c \
 			  src/gnl/get_next_line.c \
 			  src/gnl/get_next_line_utils.c \
 			  src/run_game/run.c \
+			  src/run_game/valid_move.c \
 			  src/run_game/mouse_control.c \
 			  src/run_game/dda.c \
+			  src/run_game/movement.c \
+			  src/run_game/render.c \
+			  src/run_game/walls.c \
 			  src/end/end.c \
 			  src/debugging.c \
 			  src/utils/init_utils.c \
