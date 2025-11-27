@@ -32,10 +32,36 @@ int	load_images(t_game *game)
 	game->textures->east = mlx_load_png(game->map->east);
 	if (!game->textures->east)
 		return (error_exit(game, "Error: Failed to load east texture\n"));
-	game->textures->cloud = mlx_load_png("./textures/clouds.png");
+	game->textures->cloud = mlx_load_png("./textures/cloudst.png");
 	if (!game->textures->cloud)
 		return (error_exit(game, "Error: Failed to load cloud texture\n"));
 	return (1);
+}
+
+void	draw_floor_ceiling(t_game *game)
+{
+	int		x;
+	int		y;
+	double	angle;
+
+	angle = atan2(game->player->dir_y, game->player->dir_x);
+	y = 0;
+	while (y < WINDOW_HEIGHT)
+	{
+		x = 0;
+		while (x < WINDOW_WIDTH)
+		{
+			if (y < WINDOW_HEIGHT / 2)
+			{
+				mlx_put_pixel(game->img, x, y, game->ceiling_color);
+				draw_textured_ceiling(game, x, y, angle);
+			}
+			else
+				mlx_put_pixel(game->img, x, y, game->floor_color);
+			x++;
+		}
+		y++;
+	}
 }
 
 int	run_game(t_game *game)

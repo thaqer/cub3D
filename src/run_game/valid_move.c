@@ -38,7 +38,7 @@ static int	check_valid_move(t_game *game, double new_x, double new_y)
 	double	corners_x[4];
 	double	corners_y[4];
 
-	margin = 0.005;
+	margin = 0.0000005;
 	corners_x[0] = new_x + margin;
 	corners_y[0] = new_y + margin;
 	corners_x[1] = new_x - margin;

@@ -50,65 +50,52 @@ void	cast_rays(void *param)
 	}
 }
 
-// static void	draw_textured_ceiling(t_game *game, int x, int y)
-// {
-// 	uint32_t	color;
-// 	int			tex_x;
-// 	int			tex_y;
-// 	double		angle;
-// 	uint8_t		*texture_bytes;
-// 	int			pixel_index;
-
-// 	if (!game->textures->cloud)
-// 	{
-// 		mlx_put_pixel(game->img, x, y, game->ceiling_color);
-// 		return ;
-// 	}
-// 	texture_bytes = game->textures->cloud->pixels;
-// 	angle = atan2(game->player->dir_y, game->player->dir_x);
-// 	tex_x = (int)((angle / (2.0 * 3.14159265359) + 0.5)
-// 			* game->textures->cloud->width);
-// 	tex_x = (tex_x + (x * game->textures->cloud->width) / WINDOW_WIDTH)
-// 		% game->textures->cloud->width;
-// 	tex_y = (y * game->textures->cloud->height) / (WINDOW_HEIGHT / 2);
-// 	if (tex_x < 0)
-// 		tex_x = 0;
-// 	if (tex_x >= (int)game->textures->cloud->width)
-// 		tex_x = game->textures->cloud->width - 1;
-// 	if (tex_y < 0)
-// 		tex_y = 0;
-// 	if (tex_y >= (int)game->textures->cloud->height)
-// 		tex_y = game->textures->cloud->height - 1;
-// 	pixel_index = (tex_y * game->textures->cloud->width + tex_x) * 4;
-// 	color = (texture_bytes[pixel_index] << 24)
-// 		| (texture_bytes[pixel_index + 1] << 16)
-// 		| (texture_bytes[pixel_index + 2] << 8)
-// 		| texture_bytes[pixel_index + 3];
-// 	mlx_put_pixel(game->img, x, y, color);
-// }
-
-// draw_textured_ceiling(game, x, y);
-void	draw_floor_ceiling(t_game *game)
+static void	blend_pixel(t_game *game, int x, int y, uint8_t *pixel)
 {
-	int	x;
-	int	y;
+	uint32_t	color;
 
-	y = 0;
-	while (y < WINDOW_HEIGHT)
+	if (pixel[3] == 0)
+		return ;
+	if (pixel[3] == 255)
 	{
-		x = 0;
-		while (x < WINDOW_WIDTH)
-		{
-			if (y < WINDOW_HEIGHT / 2)
-			{
-				mlx_put_pixel(game->img, x, y, game->ceiling_color);
-			}
-			else
-				mlx_put_pixel(game->img, x, y, game->floor_color);
-			x++;
-		}
-		y++;
+		color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | 255;
+		mlx_put_pixel(game->img, x, y, color);
+		return ;
 	}
+	color = (((uint8_t)(pixel[0] * pixel[3] / 255.0
+					+ ((game->ceiling_color >> 24) & 0xFF)
+					* (1.0 - pixel[3] / 255.0))) << 24)
+		| (((uint8_t)(pixel[1] * pixel[3] / 255.0
+					+ ((game->ceiling_color >> 16) & 0xFF)
+					* (1.0 - pixel[3] / 255.0))) << 16)
+		| (((uint8_t)(pixel[2] * pixel[3] / 255.0
+					+ ((game->ceiling_color >> 8) & 0xFF)
+					* (1.0 - pixel[3] / 255.0))) << 8)
+		| 255;
+	mlx_put_pixel(game->img, x, y, color);
+}
+
+void	draw_textured_ceiling(t_game *game, int x, int y, double angle)
+{
+	int			tex_x;
+	int			tex_y;
+	uint8_t		*texture_bytes;
+	int			pixel_index;
+
+	if (!game->textures->cloud)
+		return ;
+	texture_bytes = game->textures->cloud->pixels;
+	tex_x = (int)((angle / (2.0 * 3.14) + 0.5)
+			* game->textures->cloud->width);
+	tex_x = (tex_x + (x * game->textures->cloud->width) / WINDOW_WIDTH)
+		% game->textures->cloud->width;
+	tex_y = (y * game->textures->cloud->height) / (WINDOW_HEIGHT / 2);
+	if (tex_x < 0 || tex_x >= (int)game->textures->cloud->width)
+		return ;
+	if (tex_y < 0 || tex_y >= (int)game->textures->cloud->height)
+		return ;
+	pixel_index = (tex_y * game->textures->cloud->width + tex_x) * 4;
+	blend_pixel(game, x, y, &texture_bytes[pixel_index]);
 }
 
 void	calculate_wall_distance(t_ray *ray)
