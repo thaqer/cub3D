@@ -44,6 +44,8 @@ static void	handle_player_movement(t_game *game)
 	double	new_y;
 
 	move_speed = 0.05;
+	new_x = 0;
+	new_y = 0;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT_SHIFT)
 		|| mlx_is_key_down(game->mlx, MLX_KEY_RIGHT_SHIFT))
 		move_speed *= 2;

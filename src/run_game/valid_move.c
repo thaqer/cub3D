@@ -17,6 +17,8 @@ static int	check_corner(t_game *game, double x, double y)
 	int	map_x;
 	int	map_y;
 
+	map_x = 0;
+	map_y = 0;
 	map_x = (int)x;
 	map_y = (int)y;
 	if (map_x < 0 || map_y < 0)

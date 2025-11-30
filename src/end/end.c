@@ -40,42 +40,72 @@ void	free_map(t_map *map)
 {
 	size_t	i;
 
-	if (map)
+	if (!map)
+		return ;
+	if (map->north)
 	{
-		if (map->north)
-			free(map->north);
-		if (map->south)
-			free(map->south);
-		if (map->west)
-			free(map->west);
-		if (map->east)
-			free(map->east);
-		if (map->map)
-		{
-			i = 0;
-			while (map->map[i])
-				free(map->map[i++]);
-			free(map->map);
-		}
-		free(map);
+		free(map->north);
+		map->north = NULL;
 	}
+	if (map->south)
+	{
+		free(map->south);
+		map->south = NULL;
+	}
+	if (map->west)
+	{
+		free(map->west);
+		map->west = NULL;
+	}
+	if (map->east)
+	{
+		free(map->east);
+		map->east = NULL;
+	}
+	if (map->map)
+	{
+		i = 0;
+		while (map->map[i])
+		{
+			free(map->map[i]);
+			map->map[i] = NULL;
+			i++;
+		}
+		free(map->map);
+		map->map = NULL;
+	}
+	free(map);
 }
 
 void	free_game(t_game *game)
 {
-	if (game)
+	if (!game)
+		return ;
+	if (game->map)
 	{
 		free_map(game->map);
-		free_textures(game->textures);
-		free_flags(game->flags);
-		if (game->player)
-			free(game->player);
-		if (game->img && game->mlx)
-			mlx_delete_image(game->mlx, game->img);
-		if (game->mlx)
-			mlx_terminate(game->mlx);
-		free(game);
+		game->map = NULL;
 	}
+	if (game->textures)
+	{
+		free_textures(game->textures);
+		game->textures = NULL;
+	}
+	if (game->flags)
+	{
+		free_flags(game->flags);
+		game->flags = NULL;
+	}
+	if (game->player)
+	{
+		free(game->player);
+		game->player = NULL;
+	}
+	if (game->img && game->mlx)
+		mlx_delete_image(game->mlx, game->img);
+	if (game->mlx)
+		mlx_terminate(game->mlx);
+	free(game);
 }
 
 int	error_exit(t_game *game, char *message)

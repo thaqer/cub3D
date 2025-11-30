@@ -22,10 +22,7 @@ t_game	*malloc_init(t_game *game)
 {
 	game = malloc(sizeof(t_game));
 	if (!game)
-	{
 		return (error_init(NULL, "Error: allocate memory for game\n"));
-		return (NULL);
-	}
 	game->mlx = NULL;
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
