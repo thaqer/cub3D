@@ -12,12 +12,6 @@
 
 #include "../../includes/cub3d.h"
 
-void	free_flags(t_flags *flags)
-{
-	if (flags)
-		free(flags);
-}
-
 void	free_textures(t_textures *textures)
 {
 	if (textures)
@@ -36,10 +30,25 @@ void	free_textures(t_textures *textures)
 	}
 }
 
-void	free_map(t_map *map)
+static void	map_free(t_map *map)
 {
 	size_t	i;
 
+	if (!map || !map->map)
+		return ;
+	i = 0;
+	while (map->map[i])
+	{
+		free(map->map[i]);
+		map->map[i] = NULL;
+		i++;
+	}
+	free(map->map);
+	map->map = NULL;
+}
+
+void	free_map(t_map *map)
+{
 	if (!map)
 		return ;
 	if (map->north)
@@ -62,18 +71,7 @@ void	free_map(t_map *map)
 		free(map->east);
 		map->east = NULL;
 	}
-	if (map->map)
-	{
-		i = 0;
-		while (map->map[i])
-		{
-			free(map->map[i]);
-			map->map[i] = NULL;
-			i++;
-		}
-		free(map->map);
-		map->map = NULL;
-	}
+	map_free(map);
 	free(map);
 }
 
@@ -82,25 +80,13 @@ void	free_game(t_game *game)
 	if (!game)
 		return ;
 	if (game->map)
-	{
 		free_map(game->map);
-		game->map = NULL;
-	}
 	if (game->textures)
-	{
 		free_textures(game->textures);
-		game->textures = NULL;
-	}
 	if (game->flags)
-	{
-		free_flags(game->flags);
-		game->flags = NULL;
-	}
+		free(game->flags);
 	if (game->player)
-	{
 		free(game->player);
-		game->player = NULL;
-	}
 	if (game->img && game->mlx)
 		mlx_delete_image(game->mlx, game->img);
 	if (game->mlx)
