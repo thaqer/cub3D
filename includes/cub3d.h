@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 19:41:13 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/11 21:00:49 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ typedef struct s_map
 	char		*south;
 	char		*west;
 	char		*east;
-	char		floor[12];
-	char		ceiling[12];
+	char		*floor;
+	char		*ceiling;
 	char		**map;
 
 }				t_map;
@@ -176,7 +176,5 @@ void			calculate_wall_distance(t_ray *ray);
 void			draw_wall(t_game *game, t_ray *ray, int x);
 void			handle_sliding_move(t_game *game, double new_x, double new_y);
 void			draw_textured_ceiling(t_game *game, int x, int y, double angle);
-
-
 
 #endif

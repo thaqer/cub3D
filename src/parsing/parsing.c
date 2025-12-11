@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:32:37 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 18:42:53 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:08:39 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,13 @@ int	all_elements_parsed(t_flags *flags)
 
 int	process_map_line(char *line, t_game *game, int fd)
 {
-	if (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
-		|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0)
+	char	*tmp;
+
+	tmp = line;
+	while (ft_white_space(*tmp))
+		tmp++;
+	if (ft_strncmp(tmp, "NO", 2) == 0 || ft_strncmp(tmp, "SO", 2) == 0
+		|| ft_strncmp(tmp, "WE", 2) == 0 || ft_strncmp(tmp, "EA", 2) == 0)
 	{
 		if (parse_wall_texture(line, game) == -1)
 		{
@@ -41,7 +46,7 @@ int	process_map_line(char *line, t_game *game, int fd)
 			return (-1);
 		}
 	}
-	else if (ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0)
+	else if (ft_strncmp(tmp, "F", 1) == 0 || ft_strncmp(tmp, "C", 1) == 0)
 	{
 		if (parse_color_line(line, game) == -1)
 		{

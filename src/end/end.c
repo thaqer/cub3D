@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 12:25:26 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 19:43:33 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:45:03 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,17 @@ void	free_map(t_map *map)
 	if (!map)
 		return ;
 	if (map->north)
-	{
 		free(map->north);
-		map->north = NULL;
-	}
 	if (map->south)
-	{
 		free(map->south);
-		map->south = NULL;
-	}
 	if (map->west)
-	{
 		free(map->west);
-		map->west = NULL;
-	}
 	if (map->east)
-	{
 		free(map->east);
-		map->east = NULL;
-	}
+	if (map->floor)
+		free(map->floor);
+	if (map->ceiling)
+		free(map->ceiling);
 	map_free(map);
 	free(map);
 }

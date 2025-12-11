@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 16:50:19 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 19:35:24 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:16:30 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	init_map_struct(t_map *map)
 	map->south = NULL;
 	map->west = NULL;
 	map->east = NULL;
-	map->floor[0] = '\0';
-	map->ceiling[0] = '\0';
+	map->floor = NULL;
+	map->ceiling = NULL;
 	map->map = NULL;
 }
 

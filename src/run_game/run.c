@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 18:13:45 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 19:05:00 by tbaniatt         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:31:27 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,21 @@ void	draw_floor_ceiling(t_game *game)
 	}
 }
 
+static void	close_hook(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	mlx_close_window(game->mlx);
+}
+
 int	run_game(t_game *game)
 {
 	if (load_images(game) != 1)
 		return (-1);
 	mlx_image_to_window(game->mlx, game->img, 0, 0);
 	init_mouse(game);
+	mlx_close_hook(game->mlx, &close_hook, game);
 	mlx_loop_hook(game->mlx, &game_loop, game);
 	mlx_loop(game->mlx);
 	free_game(game);

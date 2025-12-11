@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 20:52:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/25 19:12:12 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:49:51 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,30 @@ int	parse_wall_texture(char *line, t_game *game)
 	return (0);
 }
 
+static int	set_color(t_game *game, char **dest, int *flag, char *line)
+{
+	*dest = ft_substr(game->color_str, 0, line - game->color_str);
+	if (!*dest)
+		return (error_exit(game, "Error: Memory allocation failed\n"));
+	*flag = 1;
+	return (0);
+}
+
 int	parse_color_line(char *line, t_game *game)
 {
 	while (ft_white_space(*line))
 		line++;
-	game->type = *line;
-	line++;
+	game->type = *line++;
 	while (ft_white_space(*line))
 		line++;
 	game->color_str = line;
 	while (*line && *line != '\n')
 		line++;
 	if (game->type == 'F' && !game->flags->floor)
-	{
-		ft_strlcpy(game->map->floor, game->color_str, line - game->color_str
-			+ 1);
-		game->flags->floor = 1;
-	}
+		return (set_color(game, &game->map->floor, &game->flags->floor, line));
 	else if (game->type == 'C' && !game->flags->ceiling)
-	{
-		ft_strlcpy(game->map->ceiling, game->color_str, line - game->color_str
-			+ 1);
-		game->flags->ceiling = 1;
-	}
+		return (set_color(game, &game->map->ceiling,
+				&game->flags->ceiling, line));
 	else
 		return (error_exit(game, "Error: Duplicate or invalid color\n"));
 	return (0);

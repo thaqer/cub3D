@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:38:09 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/24 20:59:37 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:16:30 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,14 @@ static int	count_commas(char *str)
 static int	validate_rgb(char *value)
 {
 	int	num;
+	int	i;
 
-	if (!only_digit(value))
+	i = 0;
+	while (value[i] == ' ' || value[i] == '\t')
+		i++;
+	if (!only_digit(value + i))
 		return (-1);
-	num = ft_atoi(value);
+	num = ft_atoi(value + i);
 	if (num < 0 || num > 255)
 		return (-1);
 	return (num);
@@ -61,7 +65,6 @@ static int	validate_rgb(char *value)
 int	parse_rgb(char *color_str, int *r, int *g, int *b)
 {
 	char	**rgb;
-	int		result;
 
 	if (!color_str || count_commas(color_str) != 2)
 		return (-1);
@@ -75,11 +78,10 @@ int	parse_rgb(char *color_str, int *r, int *g, int *b)
 	*r = validate_rgb(rgb[0]);
 	*g = validate_rgb(rgb[1]);
 	*b = validate_rgb(rgb[2]);
-	result = 0;
-	if (*r == -1 || *g == -1 || *b == -1)
-		result = -1;
 	ft_free_split(rgb);
-	return (result);
+	if (*r == -1 || *g == -1 || *b == -1)
+		return (-1);
+	return (0);
 }
 
 int	validate_colors(t_game *game)
