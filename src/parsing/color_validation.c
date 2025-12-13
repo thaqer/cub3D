@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   color_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:38:09 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/12/11 20:16:30 by daniah           ###   ########.fr       */
+/*   Updated: 2025/11/24 20:59:37 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+int	ft_isspace(int c)
+{
+	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f'
+		|| c == '\r')
+		return (1);
+	return (0);
+}
 
 static int	only_digit(char *str)
 {
@@ -21,7 +29,7 @@ static int	only_digit(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (!ft_isdigit(str[i]) && !ft_isspace(str[i]))
 			return (0);
 		i++;
 	}
@@ -48,14 +56,10 @@ static int	count_commas(char *str)
 static int	validate_rgb(char *value)
 {
 	int	num;
-	int	i;
 
-	i = 0;
-	while (value[i] == ' ' || value[i] == '\t')
-		i++;
-	if (!only_digit(value + i))
+	if (!only_digit(value))
 		return (-1);
-	num = ft_atoi(value + i);
+	num = ft_atoi(value);
 	if (num < 0 || num > 255)
 		return (-1);
 	return (num);
@@ -65,6 +69,7 @@ static int	validate_rgb(char *value)
 int	parse_rgb(char *color_str, int *r, int *g, int *b)
 {
 	char	**rgb;
+	int		result;
 
 	if (!color_str || count_commas(color_str) != 2)
 		return (-1);
@@ -78,10 +83,11 @@ int	parse_rgb(char *color_str, int *r, int *g, int *b)
 	*r = validate_rgb(rgb[0]);
 	*g = validate_rgb(rgb[1]);
 	*b = validate_rgb(rgb[2]);
-	ft_free_split(rgb);
+	result = 0;
 	if (*r == -1 || *g == -1 || *b == -1)
-		return (-1);
-	return (0);
+		result = -1;
+	ft_free_split(rgb);
+	return (result);
 }
 
 int	validate_colors(t_game *game)
