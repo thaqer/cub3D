@@ -54,7 +54,10 @@ t_game	*init_game(char *map_path)
 	game->floor_color = 0;
 	game->ceiling_color = 0;
 	if (validate_game_data(map_path, game) == -1)
+	{
+		free_game(game);
 		return (NULL);
+	}
 	init_player(game);
 	return (game);
 }

@@ -89,7 +89,7 @@ void	game_loop(void *param)
 	game = (t_game *)param;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(game->mlx);
-	handle_movement(game);
 	handle_mouse_rotation(game);
+	handle_movement(game);
 	cast_rays(param);
 }
