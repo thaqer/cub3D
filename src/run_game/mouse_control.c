@@ -32,18 +32,23 @@ static void	rotate_camera(t_game *game, double angle)
 void	handle_mouse_move(double x_pos, double y_pos, void *param)
 {
 	t_game	*game;
-	double	sensitivity;
-	double	mouse_move_x;
-	double	rotation;
 
 	game = (t_game *)param;
-	sensitivity = 0.0015;
-	mouse_move_x = x_pos - game->mouse_x;
+	game->mouse_dx += x_pos - game->mouse_x;
 	game->mouse_x = x_pos;
-	game->mouse_y = y_pos;
-	rotation = mouse_move_x * sensitivity;
-	rotate_camera(game, rotation);
 	(void)y_pos;
+}
+
+void	handle_mouse_rotation(t_game *game)
+{
+	double	rotation;
+	double	sensitivity;
+
+	sensitivity = 0.001;
+	rotation = game->mouse_dx * sensitivity;
+	game->mouse_dx *= 0.5;
+	if (fabs(rotation) > 0.0001)
+		rotate_camera(game, rotation);
 }
 
 void	init_mouse(t_game *game)
@@ -54,6 +59,7 @@ void	init_mouse(t_game *game)
 	mlx_get_mouse_pos(game->mlx, &mouse_x, &mouse_y);
 	game->mouse_x = (double)mouse_x;
 	game->mouse_y = (double)mouse_y;
+	game->mouse_dx = 0.0;
 	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_DISABLED);
 	mlx_cursor_hook(game->mlx, &handle_mouse_move, game);
 }

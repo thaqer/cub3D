@@ -105,6 +105,7 @@ typedef struct s_game
 	uint32_t	ceiling_color;
 	double		mouse_x;
 	double		mouse_y;
+	double		mouse_dx;
 	char		*color_str;
 	char		type;
 	int			result;
@@ -144,6 +145,7 @@ int				open_file_checked(char *path, t_game *game);
 
 // mouse_control.c 
 void			handle_mouse_move(double x_pos, double y_pos, void *param);
+void			handle_mouse_rotation(t_game *game);
 void			init_mouse(t_game *game);
 
 // parsing.c 
