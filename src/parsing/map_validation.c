@@ -105,7 +105,7 @@ static int	check_walls_enclosed(t_game *game)
 			{
 				if (!is_correct_position(game, j, i))
 				{
-					error_exit(game, "Error: Map not enclosed by walls\n");
+					error_exit(NULL, "Error: Map not enclosed by walls\n");
 					return (-1);
 				}
 			}
@@ -129,7 +129,7 @@ int	validate_map(t_game *game)
 	player_count = players(game, &player_x, &player_y);
 	if (player_count != 1)
 	{
-		error_exit(game, "Error: Map must have exactly one player\n");
+		error_exit(NULL, "Error: Map must have exactly one player\n");
 		return (-1);
 	}
 	if (check_walls_enclosed(game) == -1)

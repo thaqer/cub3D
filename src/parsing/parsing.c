@@ -68,14 +68,21 @@ int	parse_map(char *map_path, t_game *game)
 	while (line)
 	{
 		if (process_map_line(line, game, fd) == -1)
+		{
+			while (line)
+			{
+				line = get_next_line(fd);
+				free(line);
+			}
 			return (-1);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
 	if (!all_elements_parsed(game->flags))
 	{
-		error_exit(game, "Error: Missing map elements\n");
+		error_exit(NULL, "Error: Missing map elements\n");
 		return (-1);
 	}
 	return (0);

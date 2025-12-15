@@ -1,0 +1,37 @@
+==118502== Memcheck, a memory error detector
+==118502== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==118502== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==118502== Command: ./cub3D maps/bad/textures_duplicates.cub
+==118502== Parent PID: 117212
+==118502== 
+==118502== Invalid free() / delete / delete[] / realloc()
+==118502==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==118502==    by 0x406171: parse_map (parsing.c:74)
+==118502==    by 0x40281C: validate_game_data (initialize.c:26)
+==118502==    by 0x40276E: init_game (initialize.c:58)
+==118502==    by 0x402610: main (main.c:41)
+==118502==  Address 0x4d8ce10 is 0 bytes inside a block of size 27 free'd
+==118502==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==118502==    by 0x406035: process_map_line (parsing.c:39)
+==118502==    by 0x40614F: parse_map (parsing.c:70)
+==118502==    by 0x40281C: validate_game_data (initialize.c:26)
+==118502==    by 0x40276E: init_game (initialize.c:58)
+==118502==    by 0x402610: main (main.c:41)
+==118502==  Block was alloc'd at
+==118502==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==118502==    by 0x40340A: ft_substr (get_next_line_utils.c:71)
+==118502==    by 0x402FEF: get_next_line (get_next_line.c:71)
+==118502==    by 0x40619F: parse_map (parsing.c:80)
+==118502==    by 0x40281C: validate_game_data (initialize.c:26)
+==118502==    by 0x40276E: init_game (initialize.c:58)
+==118502==    by 0x402610: main (main.c:41)
+==118502== 
+==118502== 
+==118502== HEAP SUMMARY:
+==118502==     in use at exit: 0 bytes in 0 blocks
+==118502==   total heap usage: 41 allocs, 42 frees, 865 bytes allocated
+==118502== 
+==118502== All heap blocks were freed -- no leaks are possible
+==118502== 
+==118502== For lists of detected and suppressed errors, rerun with: -s
+==118502== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

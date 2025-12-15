@@ -26,7 +26,12 @@ static int	count_line(int fd)
 	{
 		result = is_line_empty(line);
 		if (handle_line_error(line, result, start) == -1)
+		{
+			free(line);
+			while ((line = get_next_line(fd)))
+				free(line);
 			return (-1);
+		}
 		if (result > 0)
 		{
 			start = 1;

@@ -47,6 +47,7 @@ void	parse_color(char *color_str, uint32_t *color)
 	if (!rgb_parts || !rgb_parts[0] || !rgb_parts[1] || !rgb_parts[2])
 	{
 		*color = 0;
+		ft_free_split(rgb_parts);
 		return ;
 	}
 	extract_rgb_values(rgb_parts, &r, &g, &b);

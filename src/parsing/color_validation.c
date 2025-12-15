@@ -98,12 +98,12 @@ int	validate_colors(t_game *game)
 
 	if (parse_rgb(game->map->floor, &r, &g, &b) == -1)
 	{
-		error_exit(game, "Error: Invalid floor color format\n");
+		error_exit(NULL, "Error: Invalid floor color format\n");
 		return (-1);
 	}
 	if (parse_rgb(game->map->ceiling, &r, &g, &b) == -1)
 	{
-		error_exit(game, "Error: Invalid ceiling color format\n");
+		error_exit(NULL, "Error: Invalid ceiling color format\n");
 		return (-1);
 	}
 	return (0);

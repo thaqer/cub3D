@@ -72,7 +72,6 @@ int	handle_line_error(char *line, int result, int start)
 {
 	if (result == -1 && start)
 	{
-		free(line);
 		ft_putstr_fd("Error: Invalid char in the map\n", 2);
 		return (-1);
 	}

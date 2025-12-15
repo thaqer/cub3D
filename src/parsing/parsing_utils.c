@@ -45,7 +45,7 @@ int	set_wall_texture(char *line, t_game *game, char *path, char *dir)
 {
 	if (assign_texture(line, game, path, dir) == -1)
 	{
-		error_exit(game, "Error: Duplicate or invalid texture\n");
+		error_exit(NULL, "Error: Duplicate or invalid texture\n");
 		return (-1);
 	}
 	return (0);
