@@ -82,10 +82,18 @@ static int	process_map_lines(t_game *game, int fd, char *line, int lines)
 	while (line && i < lines)
 	{
 		if (process_single_line(game, line, &i, &start) == -1)
+		{
+			while ((line = get_next_line(fd)))
+				free(line);
 			return (-1);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
+	if (line)
+		free(line);
+	while ((line = get_next_line(fd)))
+		free(line);
 	game->map->map[i] = NULL;
 	return (0);
 }
@@ -94,7 +102,7 @@ static int	read_map(t_game *game, int fd, int lines)
 {
 	char	*line;
 
-	game->map->map = malloc(sizeof(char *) * (lines + 1));
+	game->map->map = ft_calloc(1, sizeof(char *) * (lines + 1));
 	if (!game->map->map)
 	{
 		ft_putstr_fd("Error: Memory allocation failed\n", 2);
@@ -104,6 +112,7 @@ static int	read_map(t_game *game, int fd, int lines)
 	if (process_map_lines(game, fd, line, lines) == -1)
 	{
 		ft_free_split(game->map->map);
+		game->map->map = NULL;
 		return (-1);
 	}
 	return (0);

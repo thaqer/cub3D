@@ -44,7 +44,7 @@ static int	validate_texture(char *path)
 int	check_textures(t_game *game)
 {
 	if (!validate_texture(game->map->north))
-		return (error_exit(game, "Error: Invalid north texture path\n"));
+		return (error_exit(NULL, "Error: Invalid north texture path\n"));
 	else if (validate_texture(game->map->north) == 3)
 		return (error_exit(NULL,"Error: North texture is not a .png file\n"));
 	if (!validate_texture(game->map->south))

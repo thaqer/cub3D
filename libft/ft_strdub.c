@@ -20,9 +20,9 @@ char	*ft_strdup(const char *s)
 
 	x = 0;
 	len = ft_strlen(s);
-	dest = (char *)malloc(len * sizeof(char) + 1);
+	dest = (char *)ft_calloc(1, len * sizeof(char) + 1);
 	if (!dest)
-		return (0);
+		return (NULL);
 	while (s[x])
 	{
 		dest[x] = s[x];

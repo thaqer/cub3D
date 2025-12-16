@@ -11,10 +11,12 @@
 /* ************************************************************************** */
 
 #include "../../includes/get_next_line.h"
+#include "../../libft/libft.h"
 
 static char	*check(char *ptr)
 {
-	free(ptr);
+	if (ptr)
+		free(ptr);
 	return (NULL);
 }
 
@@ -24,7 +26,7 @@ static char	*ft_bufread(int fd, char *last)
 	char	*la;
 	int		re;
 
-	ptr = malloc(BUFFER_SIZE + 1);
+	ptr = ft_calloc(1, sizeof(char) * (BUFFER_SIZE + 1));
 	if (!ptr)
 		return (check(last));
 	re = read(fd, ptr, BUFFER_SIZE);

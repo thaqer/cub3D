@@ -48,7 +48,7 @@ char	*copy_map_line(char *line)
 	len = 0;
 	while (line[len] && line[len] != '\n')
 		len++;
-	new_line = malloc(sizeof(char) * (len + 1));
+	new_line = ft_calloc(1, sizeof(char) * (len + 1));
 	if (!new_line)
 		return (NULL);
 	ft_strlcpy(new_line, line, len + 1);
