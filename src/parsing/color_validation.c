@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:38:09 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/24 20:59:37 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:58:57 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-int	ft_isspace(int c)
-{
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f'
-		|| c == '\r')
-		return (1);
-	return (0);
-}
 
 static int	only_digit(char *str)
 {

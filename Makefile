@@ -33,6 +33,8 @@ SRCS		= src/main.c \
 			  src/parsing/parsing.c \
 			  src/parsing/map_parsing.c \
 			  src/parsing/map_parsing_utils.c \
+			  src/parsing/map_parsing_helper.c \
+			  src/parsing/line_utils.c \
 			  src/parsing/map_validation.c \
 			  src/parsing/color_validation.c \
 			  src/parsing/textures_validation.c

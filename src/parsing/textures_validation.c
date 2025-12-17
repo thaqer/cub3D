@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   textures_validation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:33:42 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/25 21:25:00 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:58:57 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+int	ft_isspace(int c)
+{
+	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f'
+		|| c == '\r')
+		return (1);
+	return (0);
+}
 
 static int	is_png(char *path)
 {
@@ -46,7 +54,7 @@ int	check_textures(t_game *game)
 	if (!validate_texture(game->map->north))
 		return (error_exit(NULL, "Error: Invalid north texture path\n"));
 	else if (validate_texture(game->map->north) == 3)
-		return (error_exit(NULL,"Error: North texture is not a .png file\n"));
+		return (error_exit(NULL, "Error: North texture is not a .png file\n"));
 	if (!validate_texture(game->map->south))
 		return (error_exit(NULL, "Error: Invalid south texture path\n"));
 	else if (validate_texture(game->map->south) == 3)

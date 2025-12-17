@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 20:52:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/25 19:12:12 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:58:57 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,20 +84,24 @@ int	parse_color_line(char *line, t_game *game)
 	while (*line && *line != '\n')
 		line++;
 	if (game->type == 'F' && !game->flags->floor)
-	{
-		game->map->floor = ft_substr(game->color_str, 0, line - game->color_str);
-		if (!game->map->floor)
-			return (error_exit(game, "Error: Memory allocation failed\n"));
-		game->flags->floor = 1;
-	}
+		return (set_floor_color(game, line));
 	else if (game->type == 'C' && !game->flags->ceiling)
-	{
-		game->map->ceiling = ft_substr(game->color_str, 0, line - game->color_str);
-		if (!game->map->ceiling)
-			return (error_exit(game, "Error: Memory allocation failed\n"));
-		game->flags->ceiling = 1;
-	}
+		return (set_ceiling_color(game, line));
 	else
 		return (error_exit(game, "Error: Duplicate or invalid color\n"));
-	return (0);
+}
+
+char	*copy_map_line(char *line)
+{
+	char	*new_line;
+	int		len;
+
+	len = 0;
+	while (line[len] && line[len] != '\n')
+		len++;
+	new_line = ft_calloc(1, sizeof(char) * (len + 1));
+	if (!new_line)
+		return (NULL);
+	ft_strlcpy(new_line, line, len + 1);
+	return (new_line);
 }

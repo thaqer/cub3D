@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:50:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/25 19:11:51 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:58:57 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,6 @@ int	is_line_empty(char *line)
 	return (found);
 }
 
-char	*copy_map_line(char *line)
-{
-	char	*new_line;
-	int		len;
-
-	len = 0;
-	while (line[len] && line[len] != '\n')
-		len++;
-	new_line = ft_calloc(1, sizeof(char) * (len + 1));
-	if (!new_line)
-		return (NULL);
-	ft_strlcpy(new_line, line, len + 1);
-	return (new_line);
-}
-
 int	open_file_checked(char *path, t_game *game)
 {
 	int	fd;
@@ -66,6 +51,18 @@ int	open_file_checked(char *path, t_game *game)
 		return (-1);
 	}
 	return (fd);
+}
+
+void	free_remaining_lines(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 }
 
 int	handle_line_error(char *line, int result, int start)

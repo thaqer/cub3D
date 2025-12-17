@@ -3,45 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:11:47 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/11/25 19:11:13 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/17 15:00:14 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-static int	count_line(int fd)
-{
-	char	*line;
-	int		start;
-	int		i;
-	int		result;
-
-	line = get_next_line(fd);
-	start = 0;
-	i = 0;
-	while (line)
-	{
-		result = is_line_empty(line);
-		if (handle_line_error(line, result, start) == -1)
-		{
-			free(line);
-			while ((line = get_next_line(fd)))
-				free(line);
-			return (-1);
-		}
-		if (result > 0)
-		{
-			start = 1;
-			i++;
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	return (i);
-}
 
 static int	process_single_line(t_game *game, char *line, int *i, int *start)
 {
@@ -72,6 +41,18 @@ static int	process_single_line(t_game *game, char *line, int *i, int *start)
 	return (0);
 }
 
+static void	cleanup_remaining_lines(int fd, char *line)
+{
+	if (line)
+		free(line);
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+}
+
 static int	process_map_lines(t_game *game, int fd, char *line, int lines)
 {
 	int	i;
@@ -83,17 +64,13 @@ static int	process_map_lines(t_game *game, int fd, char *line, int lines)
 	{
 		if (process_single_line(game, line, &i, &start) == -1)
 		{
-			while ((line = get_next_line(fd)))
-				free(line);
+			free_remaining_lines(fd);
 			return (-1);
 		}
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (line)
-		free(line);
-	while ((line = get_next_line(fd)))
-		free(line);
+	cleanup_remaining_lines(fd, line);
 	game->map->map[i] = NULL;
 	return (0);
 }
@@ -123,11 +100,7 @@ int	parse_map_grid(char *map_path, t_game *game)
 	int	lines;
 	int	fd;
 
-	fd = open_file_checked(map_path, game);
-	if (fd < 0)
-		return (-1);
-	lines = count_line(fd);
-	close(fd);
+	lines = count_map_lines(map_path, game);
 	if (lines <= 0)
 		return (-1);
 	fd = open_file_checked(map_path, game);

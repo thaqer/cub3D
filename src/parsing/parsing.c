@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:32:37 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 18:42:53 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:12:00 by daniah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	all_elements_parsed(t_flags *flags)
 
 int	process_map_line(char *line, t_game *game, int fd)
 {
-	if (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
-		|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0)
+	if (is_texture_line(line))
 	{
 		if (parse_wall_texture(line, game) == -1)
 		{
@@ -41,7 +40,7 @@ int	process_map_line(char *line, t_game *game, int fd)
 			return (-1);
 		}
 	}
-	else if (ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0)
+	else if (is_color_line(line))
 	{
 		if (parse_color_line(line, game) == -1)
 		{
@@ -53,17 +52,10 @@ int	process_map_line(char *line, t_game *game, int fd)
 	return (0);
 }
 
-int	parse_map(char *map_path, t_game *game)
+static int	read_map_lines(int fd, t_game *game)
 {
-	int		fd;
 	char	*line;
 
-	fd = open(map_path, O_RDONLY);
-	if (fd < 0)
-	{
-		error_exit(game, "Error: Unable to open map file\n");
-		return (-1);
-	}
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -78,6 +70,24 @@ int	parse_map(char *map_path, t_game *game)
 		}
 		free(line);
 		line = get_next_line(fd);
+	}
+	return (0);
+}
+
+int	parse_map(char *map_path, t_game *game)
+{
+	int		fd;
+
+	fd = open(map_path, O_RDONLY);
+	if (fd < 0)
+	{
+		error_exit(game, "Error: Unable to open map file\n");
+		return (-1);
+	}
+	if (read_map_lines(fd, game) == -1)
+	{
+		close(fd);
+		return (-1);
 	}
 	close(fd);
 	if (!all_elements_parsed(game->flags))
