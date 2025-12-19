@@ -62,6 +62,13 @@ static int	players(t_game *game, int *player_x, int *player_y)
 	return (count);
 }
 
+static int	is_valid_neighbor(char c)
+{
+	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
+		return (1);
+	return (0);
+}
+
 static int	is_correct_position(t_game *game, int x, int y)
 {
 	int	total_rows;
@@ -75,15 +82,15 @@ static int	is_correct_position(t_game *game, int x, int y)
 	row_len = ft_strlen(game->map->map[y]);
 	if (x == 0 || x == row_len - 1)
 		return (0);
-	if (y > 0 && x < (int)ft_strlen(game->map->map[y - 1])
-		&& !valid_map_char(game->map->map[y - 1][x]))
+	if (y > 0 && (x >= (int)ft_strlen(game->map->map[y - 1])
+		|| !is_valid_neighbor(game->map->map[y - 1][x])))
 		return (0);
-	if (y < total_rows - 1 && x < (int)ft_strlen(game->map->map[y + 1])
-		&& !valid_map_char(game->map->map[y + 1][x]))
+	if (y < total_rows - 1 && (x >= (int)ft_strlen(game->map->map[y + 1])
+		|| !is_valid_neighbor(game->map->map[y + 1][x])))
 		return (0);
-	if (x > 0 && !valid_map_char(game->map->map[y][x - 1]))
+	if (x > 0 && !is_valid_neighbor(game->map->map[y][x - 1]))
 		return (0);
-	if (x < row_len - 1 && !valid_map_char(game->map->map[y][x + 1]))
+	if (x < row_len - 1 && !is_valid_neighbor(game->map->map[y][x + 1]))
 		return (0);
 	return (1);
 }

@@ -58,7 +58,8 @@ void	perform_dda(t_game *game, t_ray *ray)
 		}
 		if (ray->map_x < 0 || ray->map_y < 0 || !game->map->map[ray->map_y]
 			|| game->map->map[ray->map_y][ray->map_x] == '\0'
-			|| game->map->map[ray->map_y][ray->map_x] == '1')
+			|| game->map->map[ray->map_y][ray->map_x] == '1'
+			|| game->map->map[ray->map_y][ray->map_x] == ' ')
 		{
 			ray->hit = 1;
 			break ;

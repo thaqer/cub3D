@@ -26,7 +26,7 @@ int	is_line_empty(char *line)
 	int	found;
 
 	i = 0;
-	found = 1;
+	found = 0;
 	if (!line || line[0] == '\n')
 		return (0);
 	while (line[i] && line[i] != '\n')

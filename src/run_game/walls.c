@@ -23,7 +23,7 @@ static mlx_texture_t	*get_wall_texture(t_game *game, t_ray *ray)
 	else
 		return (game->textures->north);
 }
-
+//cal to fix mirror effect
 static int	calculate_tex_x(t_ray *ray, t_game *game, mlx_texture_t *texture)
 {
 	double	wall_x;
@@ -35,8 +35,8 @@ static int	calculate_tex_x(t_ray *ray, t_game *game, mlx_texture_t *texture)
 		wall_x = game->player->x + ray->perp_wall_dist * ray->ray_dir_x;
 	wall_x -= floor(wall_x);
 	tex_x = (int)(wall_x * (double)texture->width);
-	if ((ray->side == 0 && ray->ray_dir_x > 0) || (ray->side == 1
-			&& ray->ray_dir_y < 0))
+	if ((ray->side == 0 && ray->ray_dir_x < 0) || (ray->side == 1
+			&& ray->ray_dir_y > 0))
 		tex_x = texture->width - tex_x - 1;
 	return (tex_x);
 }

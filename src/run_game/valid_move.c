@@ -25,7 +25,8 @@ static int	check_corner(t_game *game, double x, double y)
 		return (0);
 	if (!game->map->map[map_y] || !game->map->map[map_y][map_x])
 		return (0);
-	if (game->map->map[map_y][map_x] == '1')
+	if (game->map->map[map_y][map_x] == '1'
+		|| game->map->map[map_y][map_x] == ' ')
 		return (0);
 	return (1);
 }
@@ -40,7 +41,7 @@ static int	check_valid_move(t_game *game, double new_x, double new_y)
 	double	corners_x[4];
 	double	corners_y[4];
 
-	margin = 0.039;
+	margin = 0.00004;
 	corners_x[0] = new_x + margin;
 	corners_y[0] = new_y + margin;
 	corners_x[1] = new_x - margin;
