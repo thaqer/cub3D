@@ -154,6 +154,7 @@ int				count_map_lines(char *map_path, t_game *game);
 // line_utils.c
 int				is_texture_line(char *line);
 int				is_color_line(char *line);
+int				count_digits(char **rgb_parts);
 
 // mouse_control.c 
 void			handle_mouse_move(double x_pos, double y_pos, void *param);
@@ -172,6 +173,11 @@ int				error_exit(t_game *game, char *message);
 
 // map_validation.c 
 int				validate_map(t_game *game);
+
+// map_validation_utils.c
+int				check_map_char(t_game *game);
+int				players(t_game *game, int *player_x, int *player_y);
+int				is_valid_neighbor(char c);
 
 // color_validation.c
 int				validate_colors(t_game *game);

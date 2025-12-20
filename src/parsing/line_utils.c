@@ -30,3 +30,21 @@ int	is_color_line(char *line)
 		return (1);
 	return (0);
 }
+
+int	count_digits(char **rgb_parts)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (rgb_parts[i])
+	{
+		j = 0;
+		while (rgb_parts[i][j])
+			j++;
+		if (j > 3)
+			return (-1);
+		i++;
+	}
+	return (0);
+}

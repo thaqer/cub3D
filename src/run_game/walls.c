@@ -23,6 +23,7 @@ static mlx_texture_t	*get_wall_texture(t_game *game, t_ray *ray)
 	else
 		return (game->textures->north);
 }
+
 //cal to fix mirror effect
 static int	calculate_tex_x(t_ray *ray, t_game *game, mlx_texture_t *texture)
 {

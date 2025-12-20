@@ -35,8 +35,10 @@ int	handle_count_error(char *line, int result, int start, int fd)
 {
 	if (handle_line_error(line, result, start) == -1)
 	{
-		free(line);
+		if (line)
+			free(line);
 		free_remaining_lines(fd);
+		ft_putstr_fd("Error: Invalid char in the map\n", 2);
 		return (-1);
 	}
 	return (0);

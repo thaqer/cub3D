@@ -73,9 +73,6 @@ int	handle_line_error(char *line, int result, int start)
 		return (-1);
 	}
 	if (start && line[0] != '\n' && result <= 0)
-	{
-		free(line);
 		return (-1);
-	}
 	return (0);
 }

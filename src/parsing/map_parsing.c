@@ -32,7 +32,7 @@ static int	process_single_line(t_game *game, char *line, int *i, int *start)
 			return (-1);
 		}
 	}
-	else if (*start && line[0] != '\n')
+	else if (*start && line[0] == '\n')
 	{
 		free(line);
 		ft_putstr_fd("Error: Invalid map format\n", 2);

@@ -66,6 +66,11 @@ int	parse_rgb(char *color_str, int *r, int *g, int *b)
 	if (!color_str || count_commas(color_str) != 2)
 		return (-1);
 	rgb = ft_split(color_str, ',');
+	if (count_digits(rgb) == -1)
+	{
+		ft_free_split(rgb);
+		return (-1);
+	}
 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
 	{
 		if (rgb)

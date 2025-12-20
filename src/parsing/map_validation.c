@@ -12,63 +12,6 @@
 
 #include "../../includes/cub3d.h"
 
-static int	check_map_char(t_game *game)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (game->map->map[i])
-	{
-		j = 0;
-		while (game->map->map[i][j])
-		{
-			if (!valid_map_char(game->map->map[i][j]))
-			{
-				error_exit(game, "Error: Invalid char in map\n");
-				return (-1);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-static int	players(t_game *game, int *player_x, int *player_y)
-{
-	int	i;
-	int	j;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (game->map->map[i])
-	{
-		j = 0;
-		while (game->map->map[i][j])
-		{
-			if (game->map->map[i][j] == 'N' || game->map->map[i][j] == 'W'
-				|| game->map->map[i][j] == 'S' || game->map->map[i][j] == 'E')
-			{
-				*player_x = j;
-				*player_y = i;
-				count++;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (count);
-}
-
-static int	is_valid_neighbor(char c)
-{
-	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		return (1);
-	return (0);
-}
-
 static int	is_correct_position(t_game *game, int x, int y)
 {
 	int	total_rows;
@@ -83,10 +26,10 @@ static int	is_correct_position(t_game *game, int x, int y)
 	if (x == 0 || x == row_len - 1)
 		return (0);
 	if (y > 0 && (x >= (int)ft_strlen(game->map->map[y - 1])
-		|| !is_valid_neighbor(game->map->map[y - 1][x])))
+			|| !is_valid_neighbor(game->map->map[y - 1][x])))
 		return (0);
 	if (y < total_rows - 1 && (x >= (int)ft_strlen(game->map->map[y + 1])
-		|| !is_valid_neighbor(game->map->map[y + 1][x])))
+			|| !is_valid_neighbor(game->map->map[y + 1][x])))
 		return (0);
 	if (x > 0 && !is_valid_neighbor(game->map->map[y][x - 1]))
 		return (0);
