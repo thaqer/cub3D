@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 10:32:37 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/12/17 16:12:00 by daniah           ###   ########.fr       */
+/*   Updated: 2025/12/22 20:19:35 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	parse_map(char *map_path, t_game *game)
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
 	{
-		error_exit(game, "Error: Unable to open map file\n");
+		error_exit(NULL, "Error: Unable to open map file\n");
 		return (-1);
 	}
 	if (read_map_lines(fd, game) == -1)

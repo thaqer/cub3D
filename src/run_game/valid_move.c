@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_move.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaniatt <tbaniatt@student.42.fr>          #+#  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-11-27 13:54:18 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025-11-27 13:54:18 by tbaniatt         ###   ########.fr       */
+/*   Created: 2025/11/27 13:54:18 by tbaniatt          #+#    #+#             */
+/*   Updated: 2025/12/22 20:48:54 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int	check_corner(t_game *game, double x, double y)
 	if (!game->map->map[map_y] || !game->map->map[map_y][map_x])
 		return (0);
 	if (game->map->map[map_y][map_x] == '1'
-		|| game->map->map[map_y][map_x] == ' ')
+		|| game->map->map[map_y][map_x] == ' '
+		|| game->map->map[map_y][map_x] == '\t')
 		return (0);
 	return (1);
 }

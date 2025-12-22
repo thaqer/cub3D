@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaniatt <tbaniatt@student.42.fr>          #+#  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-11-25 16:26:48 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025-11-25 16:26:48 by tbaniatt         ###   ########.fr       */
+/*   Created: 2025/11/25 16:26:48 by tbaniatt          #+#    #+#             */
+/*   Updated: 2025/12/22 20:04:30 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,34 @@ void	init_dir(t_game *game, t_ray *ray)
 	}
 }
 
+static void	norm_dda_utils(t_ray *ray)
+{
+	if (ray->side_dist_x < ray->side_dist_y)
+	{
+		ray->side_dist_x += ray->delta_dist_x;
+		ray->map_x += ray->step_x;
+		ray->side = 0;
+	}
+	else
+	{
+		ray->side_dist_y += ray->delta_dist_y;
+		ray->map_y += ray->step_y;
+		ray->side = 1;
+	}
+}
+
 void	perform_dda(t_game *game, t_ray *ray)
 {
 	init_dir(game, ray);
 	ray->hit = 0;
 	while (ray->hit == 0)
 	{
-		if (ray->side_dist_x < ray->side_dist_y)
-		{
-			ray->side_dist_x += ray->delta_dist_x;
-			ray->map_x += ray->step_x;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->side_dist_y += ray->delta_dist_y;
-			ray->map_y += ray->step_y;
-			ray->side = 1;
-		}
+		norm_dda_utils(ray);
 		if (ray->map_x < 0 || ray->map_y < 0 || !game->map->map[ray->map_y]
 			|| game->map->map[ray->map_y][ray->map_x] == '\0'
 			|| game->map->map[ray->map_y][ray->map_x] == '1'
-			|| game->map->map[ray->map_y][ray->map_x] == ' ')
+			|| game->map->map[ray->map_y][ray->map_x] == ' '
+			|| game->map->map[ray->map_y][ray->map_x] == '\t')
 		{
 			ray->hit = 1;
 			break ;

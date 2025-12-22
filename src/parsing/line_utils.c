@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:30:00 by daniah            #+#    #+#             */
-/*   Updated: 2025/12/17 16:11:58 by daniah           ###   ########.fr       */
+/*   Updated: 2025/12/22 21:20:19 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,20 @@ int	count_digits(char **rgb_parts)
 {
 	int	i;
 	int	j;
+	int	count;
 
 	i = 0;
 	while (rgb_parts[i])
 	{
 		j = 0;
+		count = 0;
 		while (rgb_parts[i][j])
+		{
+			if (ft_isdigit(rgb_parts[i][j]))
+				count++;
 			j++;
-		if (j > 3)
+		}
+		if (count > 3)
 			return (-1);
 		i++;
 	}

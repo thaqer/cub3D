@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:50:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/12/17 14:58:57 by daniah           ###   ########.fr       */
+/*   Updated: 2025/12/22 20:35:54 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_line_empty(char *line)
 	{
 		if (!valid_map_char(line[i]))
 			return (-1);
-		if (line[i] != ' ')
+		if (line[i] != ' ' && line[i] != '\t')
 			found = 1;
 		i++;
 	}
@@ -67,12 +67,8 @@ void	free_remaining_lines(int fd)
 
 int	handle_line_error(char *line, int result, int start)
 {
+	(void)line;
 	if (result == -1 && start)
-	{
-		ft_putstr_fd("Error: Invalid char in the map\n", 2);
-		return (-1);
-	}
-	if (start && line[0] != '\n' && result <= 0)
 		return (-1);
 	return (0);
 }
