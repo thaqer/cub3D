@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:38:09 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/12/23 20:29:36 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/23 20:59:05 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ static int	only_digit(char *str)
 
 	i = 0;
 	if (!str || str[0] == '\0')
+		return (0);
+	while (str[i] == ' ')
+		i++;
+	while (str[i] == '0')
+		i++;
+	if (count_digits((str + i)) == -1)
 		return (0);
 	while (str[i])
 	{

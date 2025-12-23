@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:30:00 by daniah            #+#    #+#             */
-/*   Updated: 2025/12/23 20:27:44 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/23 21:00:55 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,3 +72,20 @@ int	is_color_line(char *line)
 // 	}
 // 	return (0);
 // }
+int	count_digits(char *rgb_parts)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (rgb_parts[i])
+	{
+		if (ft_isdigit(rgb_parts[i]))
+			count++;
+		i++;
+	}
+	if (count > 3)
+		return (-1);
+	return (0);
+}

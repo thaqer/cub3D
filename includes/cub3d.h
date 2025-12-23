@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/12/23 12:30:38 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/23 21:00:29 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int				count_map_lines(char *map_path, t_game *game);
 // line_utils.c
 int				is_texture_line(char *line);
 int				is_color_line(char *line);
-int				count_digits(char **rgb_parts);
+int				count_digits(char *rgb_parts);
 
 // mouse_control.c 
 void			handle_mouse_move(double x_pos, double y_pos, void *param);
