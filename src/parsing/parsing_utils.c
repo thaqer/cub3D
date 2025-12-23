@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 20:52:00 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/12/17 14:58:57 by daniah           ###   ########.fr       */
+/*   Updated: 2025/12/23 15:55:34 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	parse_wall_texture(char *line, t_game *game)
 		line++;
 	dir = line;
 	line += 2;
+	if (*line != '\0' && *line != '\n' && !ft_white_space(*line))
+		return (error_exit(NULL, "Error: Missing map elements\n"));
 	while (ft_white_space(*line))
 		line++;
 	path = line;

@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   textures_validation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 11:33:42 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/12/17 14:58:57 by daniah           ###   ########.fr       */
+/*   Updated: 2025/12/23 12:11:59 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-int	ft_isspace(int c)
-{
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f'
-		|| c == '\r')
-		return (1);
-	return (0);
-}
 
 static int	is_png(char *path)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/12/17 16:12:00 by daniah           ###   ########.fr       */
+/*   Updated: 2025/12/23 12:30:38 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void			print_game_info(t_game *game);
 void			print_map(t_game *game);
 void			print_textures_paths(t_game *game);
 void			print_colors(t_game *game);
-int32_t			test_mlx_functions(t_game *game);
+int32_t			test_mlx_functions(t_game *game); //debugging
 //////////////////////////
 
 // initialize.c 
@@ -145,7 +145,6 @@ int				open_file_checked(char *path, t_game *game);
 void			free_remaining_lines(int fd);
 
 // map_parsing_helper.c
-int				ft_isspace(int c);
 int				handle_count_error(char *line, int result, int start, int fd);
 int				set_floor_color(t_game *game, char *line);
 int				set_ceiling_color(t_game *game, char *line);

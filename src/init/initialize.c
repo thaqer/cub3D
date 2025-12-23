@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 09:16:39 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/11/25 21:04:22 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/23 12:29:24 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ t_game	*init_game(char *map_path)
 	init_player(game);
 	return (game);
 }
-// print_game_info(game);
 
 static void	player_direction(t_game *game, char player_dir)
 {

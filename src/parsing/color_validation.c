@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:38:09 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/12/22 13:56:03 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/23 20:29:36 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	only_digit(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]) && !ft_isspace(str[i]))
+		if (!ft_isdigit(str[i]) && !ft_white_space(str[i]))
 			return (0);
 		i++;
 	}
@@ -56,7 +56,15 @@ static int	validate_rgb(char *value)
 		return (-1);
 	return (num);
 }
-
+	// printf("RGB Parts: [%s], [%s], [%s]\n",
+	// 	rgb[0] ? rgb[0] : "NULL",
+	// 	rgb[1] ? rgb[1] : "NULL",
+	// 	rgb[2] ? rgb[2] : "NULL");
+	// if (count_digits(rgb) == -1)
+	// {
+	// 	ft_free_split(rgb);
+	// 	return (-1);
+	// }
 // Parses RGB color string into individual R, G, B values
 int	parse_rgb(char *color_str, int *r, int *g, int *b)
 {
@@ -66,11 +74,6 @@ int	parse_rgb(char *color_str, int *r, int *g, int *b)
 	if (!color_str || count_commas(color_str) != 2)
 		return (-1);
 	rgb = ft_split(color_str, ',');
-	if (count_digits(rgb) == -1)
-	{
-		ft_free_split(rgb);
-		return (-1);
-	}
 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
 	{
 		if (rgb)

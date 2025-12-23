@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daniah <daniah@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 19:55:36 by dqaddomi          #+#    #+#             */
-/*   Updated: 2025/12/11 20:56:56 by daniah           ###   ########.fr       */
+/*   Updated: 2025/12/23 19:48:33 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+static int	check_diagonal(t_game *game, int x, int y, int total_rows)
+{
+	int	prev_len;
+	int	next_len;
+
+	if (y > 0)
+	{
+		prev_len = ft_strlen(game->map->map[y - 1]);
+		if ((x > 0 && (x - 1 >= prev_len
+					|| !is_valid_neighbor(game->map->map[y - 1][x - 1]))))
+			return (0);
+		if ((x + 1 >= prev_len
+				|| !is_valid_neighbor(game->map->map[y - 1][x + 1])))
+			return (0);
+	}
+	if (y < total_rows - 1)
+	{
+		next_len = ft_strlen(game->map->map[y + 1]);
+		if ((x > 0 && (x - 1 >= next_len
+					|| !is_valid_neighbor(game->map->map[y + 1][x - 1]))))
+			return (0);
+		if ((x + 1 >= next_len
+				|| !is_valid_neighbor(game->map->map[y + 1][x + 1])))
+			return (0);
+	}
+	return (1);
+}
 
 static int	is_correct_position(t_game *game, int x, int y)
 {
@@ -34,6 +62,8 @@ static int	is_correct_position(t_game *game, int x, int y)
 	if (x > 0 && !is_valid_neighbor(game->map->map[y][x - 1]))
 		return (0);
 	if (x < row_len - 1 && !is_valid_neighbor(game->map->map[y][x + 1]))
+		return (0);
+	if (!check_diagonal(game, x, y, total_rows))
 		return (0);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbaniatt <tbaniatt@student.42.fr>          #+#  +:+       +#+        */
+/*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-12-20 13:46:16 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025-12-20 13:46:16 by tbaniatt         ###   ########.fr       */
+/*   Created: 2025/12/20 13:46:16 by tbaniatt          #+#    #+#             */
+/*   Updated: 2025/12/23 15:54:21 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
