@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 23:33:03 by daniah            #+#    #+#             */
-/*   Updated: 2025/11/25 18:39:08 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/27 18:19:54 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,21 @@ void	handle_mouse_rotation(t_game *game)
 		rotate_camera(game, rotation);
 }
 
+void	toggle_mouse_visibility(mlx_key_data_t keydata, void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	if (keydata.key == MLX_KEY_LEFT_CONTROL
+		|| keydata.key == MLX_KEY_RIGHT_CONTROL)
+	{
+		if (keydata.action == MLX_PRESS)
+			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
+		else if (keydata.action == MLX_RELEASE)
+			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_DISABLED);
+	}
+}
+
 void	init_mouse(t_game *game)
 {
 	int32_t	mouse_x;
@@ -62,4 +77,5 @@ void	init_mouse(t_game *game)
 	game->mouse_dx = 0.0;
 	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_DISABLED);
 	mlx_cursor_hook(game->mlx, &handle_mouse_move, game);
+	mlx_key_hook(game->mlx, &toggle_mouse_visibility, game);
 }

@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/12/27 13:26:24 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/27 18:20:36 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,5 @@ void			calculate_wall_distance(t_ray *ray);
 void			draw_wall(t_game *game, t_ray *ray, int x);
 void			handle_sliding_move(t_game *game, double new_x, double new_y);
 void			draw_textured_ceiling(t_game *game, int x, int y, double angle);
-
 
 #endif
