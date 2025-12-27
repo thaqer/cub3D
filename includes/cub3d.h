@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:35:42 by tbaniatt          #+#    #+#             */
-/*   Updated: 2025/12/23 21:00:29 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/27 13:26:24 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int				count_map_lines(char *map_path, t_game *game);
 int				is_texture_line(char *line);
 int				is_color_line(char *line);
 int				count_digits(char *rgb_parts);
+int				only_digit(char *str);
 
 // mouse_control.c 
 void			handle_mouse_move(double x_pos, double y_pos, void *param);
@@ -180,6 +181,7 @@ int				is_valid_neighbor(char c);
 
 // color_validation.c
 int				validate_colors(t_game *game);
+int				extract_digit_info(char *s, int *after_idx, int *sig_digits);
 
 // textures_validation.c
 int				check_textures(t_game *game);
@@ -195,5 +197,6 @@ void			calculate_wall_distance(t_ray *ray);
 void			draw_wall(t_game *game, t_ray *ray, int x);
 void			handle_sliding_move(t_game *game, double new_x, double new_y);
 void			draw_textured_ceiling(t_game *game, int x, int y, double angle);
+
 
 #endif

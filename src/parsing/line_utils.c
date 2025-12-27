@@ -6,7 +6,7 @@
 /*   By: dqaddomi <dqaddomi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:30:00 by daniah            #+#    #+#             */
-/*   Updated: 2025/12/23 21:00:55 by dqaddomi         ###   ########.fr       */
+/*   Updated: 2025/12/27 13:24:46 by dqaddomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,47 +31,6 @@ int	is_color_line(char *line)
 	return (0);
 }
 
-// int	count_digits(char **rgb_parts)
-// {
-// 	int	i;
-// 	int	j;
-// 	int	count;
-// 	int	leading_zeros;
-// 	int	digit_started;
-
-// 	i = 0;
-// 	while (rgb_parts[i])
-// 	{
-// 		j = 0;
-// 		count = 0;
-// 		leading_zeros = 1;
-// 		digit_started = 0;
-// 		while (rgb_parts[i][j])
-// 		{
-// 			if (ft_isdigit(rgb_parts[i][j]))
-// 			{
-// 				if (rgb_parts[i][j] != '0' || !leading_zeros)
-// 				{
-// 					count++;
-// 					leading_zeros = 0;
-// 					digit_started = 1;
-// 				}
-// 				else if (rgb_parts[i][j] == '0' && leading_zeros)
-// 					digit_started = 1;
-// 			}
-// 			else if (ft_white_space(rgb_parts[i][j]) && digit_started)
-			
-// 				return (-1);
-// 			else if (!ft_white_space(rgb_parts[i][j]))
-// 				return (-1);
-// 			j++;
-// 		}
-// 		if (count > 3)
-// 			return (-1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
 int	count_digits(char *rgb_parts)
 {
 	int	i;
@@ -88,4 +47,24 @@ int	count_digits(char *rgb_parts)
 	if (count > 3)
 		return (-1);
 	return (0);
+}
+
+int	only_digit(char *str)
+{
+	int	i;
+	int	sig;
+
+	if (!str)
+		return (0);
+	if (!extract_digit_info(str, &i, &sig))
+		return (0);
+	if (sig > 3)
+		return (0);
+	while (str[i])
+	{
+		if (!ft_white_space(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
