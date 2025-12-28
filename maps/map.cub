@@ -1,10 +1,10 @@
-NO textures/thaer.png
-SO textures/abd.png
-WE textures/marwan.png
-EA textures/momo.png
+NO textures/north.png
+SO textures/west.png
+WE textures/south.png
+EA textures/north.png
 
-C   110, 108, 102
-F 13, 13, 12
+C   173, 216, 230
+F 255, 182, 193
 
 1111111111111111111111111111111111111111111
 1000000000000000000000000000000000000000001
