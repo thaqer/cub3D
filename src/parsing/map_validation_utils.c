@@ -25,7 +25,7 @@ int	check_map_char(t_game *game)
 		{
 			if (!valid_map_char(game->map->map[i][j]))
 			{
-				error_exit(game, "Error: Invalid char in map\n");
+				error_exit(NULL, "Error\nInvalid char in map\n");
 				return (-1);
 			}
 			j++;

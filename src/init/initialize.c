@@ -27,12 +27,10 @@ static int	validate_game_data(char *map_path, t_game *game)
 		return (-1);
 	if (parse_map_grid(map_path, game) == -1)
 		return (-1);
-	parse_color(game->map->floor, &game->floor_color);
-	parse_color(game->map->ceiling, &game->ceiling_color);
-	if (game->floor_color == 0 || game->ceiling_color == 0)
-		return (-1);
 	if (validate_colors(game) == -1)
 		return (-1);
+	parse_color(game->map->floor, &game->floor_color);
+	parse_color(game->map->ceiling, &game->ceiling_color);
 	if (validate_map(game) == -1)
 		return (-1);
 	if (check_textures(game) == -1)

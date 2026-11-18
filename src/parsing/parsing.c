@@ -81,7 +81,7 @@ int	parse_map(char *map_path, t_game *game)
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
 	{
-		error_exit(NULL, "Error: Unable to open map file\n");
+		error_exit(NULL, "Error\nUnable to open map file\n");
 		return (-1);
 	}
 	if (read_map_lines(fd, game) == -1)
@@ -92,7 +92,7 @@ int	parse_map(char *map_path, t_game *game)
 	close(fd);
 	if (!all_elements_parsed(game->flags))
 	{
-		error_exit(NULL, "Error: Missing map elements\n");
+		error_exit(NULL, "Error\nMissing map elements\n");
 		return (-1);
 	}
 	return (0);

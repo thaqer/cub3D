@@ -22,3 +22,8 @@ cub3D
 
 # Compilation artifacts
 Makefile.bak
+# Stray test binaries
+a.out
+
+# MLX42 build folder
+MLX42/build/

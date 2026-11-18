@@ -44,10 +44,11 @@ int	open_file_checked(char *path, t_game *game)
 {
 	int	fd;
 
+	(void)game;
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		error_exit(game, "Error: Unable to open map file\n");
+		error_exit(NULL, "Error\nUnable to open map file\n");
 		return (-1);
 	}
 	return (fd);

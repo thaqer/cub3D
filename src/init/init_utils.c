@@ -22,19 +22,19 @@ t_game	*malloc_init(t_game *game)
 {
 	game = ft_calloc(1, sizeof(t_game));
 	if (!game)
-		return (error_init(NULL, "Error: allocate memory for game\n"));
+		return (error_init(NULL, "Error\nallocate memory for game\n"));
 	game->map = ft_calloc(1, sizeof(t_map));
 	if (!game->map)
-		return (error_init(game, "Error: allocate memory for map\n"));
+		return (error_init(game, "Error\nallocate memory for map\n"));
 	game->flags = ft_calloc(1, sizeof(t_flags));
 	if (!game->flags)
-		return (error_init(game, "Error: allocate memory for flags\n"));
+		return (error_init(game, "Error\nallocate memory for flags\n"));
 	game->textures = ft_calloc(1, sizeof(t_textures));
 	if (!game->textures)
-		return (error_init(game, "Error: allocate memory for textures\n"));
+		return (error_init(game, "Error\nallocate memory for textures\n"));
 	game->player = ft_calloc(1, sizeof(t_player));
 	if (!game->player)
-		return (error_init(game, "Error: allocate memory for player\n"));
+		return (error_init(game, "Error\nallocate memory for player\n"));
 	return (game);
 }
 

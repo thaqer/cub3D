@@ -44,20 +44,20 @@ static int	validate_texture(char *path)
 int	check_textures(t_game *game)
 {
 	if (!validate_texture(game->map->north))
-		return (error_exit(NULL, "Error: Invalid north texture path\n"));
+		return (error_exit(NULL, "Error\nInvalid north texture path\n"));
 	else if (validate_texture(game->map->north) == 3)
-		return (error_exit(NULL, "Error: North texture is not a .png file\n"));
+		return (error_exit(NULL, "Error\nNorth texture is not a .png file\n"));
 	if (!validate_texture(game->map->south))
-		return (error_exit(NULL, "Error: Invalid south texture path\n"));
+		return (error_exit(NULL, "Error\nInvalid south texture path\n"));
 	else if (validate_texture(game->map->south) == 3)
-		return (error_exit(NULL, "Error: South texture is not a .png file\n"));
+		return (error_exit(NULL, "Error\nSouth texture is not a .png file\n"));
 	if (!validate_texture(game->map->west))
-		return (error_exit(NULL, "Error: Invalid west texture path\n"));
+		return (error_exit(NULL, "Error\nInvalid west texture path\n"));
 	else if (validate_texture(game->map->west) == 3)
-		return (error_exit(NULL, "Error: West texture is not a .png file\n"));
+		return (error_exit(NULL, "Error\nWest texture is not a .png file\n"));
 	if (!validate_texture(game->map->east))
-		return (error_exit(NULL, "Error: Invalid east texture path\n"));
+		return (error_exit(NULL, "Error\nInvalid east texture path\n"));
 	else if (validate_texture(game->map->east) == 3)
-		return (error_exit(NULL, "Error: East texture is not a .png file\n"));
+		return (error_exit(NULL, "Error\nEast texture is not a .png file\n"));
 	return (0);
 }

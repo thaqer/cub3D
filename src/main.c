@@ -30,12 +30,12 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		error_exit(NULL, "Error: Invalid number of arguments\n");
+		error_exit(NULL, "Error\nInvalid number of arguments\n");
 		return (1);
 	}
 	if (!validate_file_extension(argv[1]))
 	{
-		error_exit(NULL, "Error: Invalid file extension\n");
+		error_exit(NULL, "Error\nInvalid file extension\n");
 		return (1);
 	}
 	game = init_game(argv[1]);

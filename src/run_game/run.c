@@ -16,25 +16,25 @@ int	load_images(t_game *game)
 {
 	game->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", false);
 	if (!game->mlx)
-		return (error_exit(game, "Error: Failed to initialize MLX\n"));
+		return (error_exit(game, "Error\nFailed to initialize MLX\n"));
 	game->img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!game->img)
-		return (error_exit(game, "Error: Failed to create image\n"));
+		return (error_exit(game, "Error\nFailed to create image\n"));
 	game->textures->north = mlx_load_png(game->map->north);
 	if (!game->textures->north)
-		return (error_exit(game, "Error: Failed to load north texture\n"));
+		return (error_exit(game, "Error\nFailed to load north texture\n"));
 	game->textures->south = mlx_load_png(game->map->south);
 	if (!game->textures->south)
-		return (error_exit(game, "Error: Failed to load south texture\n"));
+		return (error_exit(game, "Error\nFailed to load south texture\n"));
 	game->textures->west = mlx_load_png(game->map->west);
 	if (!game->textures->west)
-		return (error_exit(game, "Error: Failed to load west texture\n"));
+		return (error_exit(game, "Error\nFailed to load west texture\n"));
 	game->textures->east = mlx_load_png(game->map->east);
 	if (!game->textures->east)
-		return (error_exit(game, "Error: Failed to load east texture\n"));
+		return (error_exit(game, "Error\nFailed to load east texture\n"));
 	game->textures->cloud = mlx_load_png("./textures/cloudst.png");
 	if (!game->textures->cloud)
-		return (error_exit(game, "Error: Failed to load cloud texture\n"));
+		return (error_exit(game, "Error\nFailed to load cloud texture\n"));
 	return (1);
 }
 

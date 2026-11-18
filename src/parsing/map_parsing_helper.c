@@ -16,7 +16,7 @@ int	set_floor_color(t_game *game, char *line)
 {
 	game->map->floor = ft_substr(game->color_str, 0, line - game->color_str);
 	if (!game->map->floor)
-		return (error_exit(game, "Error: Memory allocation failed\n"));
+		return (error_exit(NULL, "Error\nMemory allocation failed\n"));
 	game->flags->floor = 1;
 	return (0);
 }
@@ -26,7 +26,7 @@ int	set_ceiling_color(t_game *game, char *line)
 	game->map->ceiling = ft_substr(game->color_str, 0,
 			line - game->color_str);
 	if (!game->map->ceiling)
-		return (error_exit(game, "Error: Memory allocation failed\n"));
+		return (error_exit(NULL, "Error\nMemory allocation failed\n"));
 	game->flags->ceiling = 1;
 	return (0);
 }
@@ -38,7 +38,7 @@ int	handle_count_error(char *line, int result, int start, int fd)
 		if (line)
 			free(line);
 		free_remaining_lines(fd);
-		ft_putstr_fd("Error: Invalid char in the map\n", 2);
+		ft_putstr_fd("Error\nInvalid char in the map\n", 2);
 		return (-1);
 	}
 	return (0);

@@ -45,7 +45,7 @@ int	set_wall_texture(char *line, t_game *game, char *path, char *dir)
 {
 	if (assign_texture(line, game, path, dir) == -1)
 	{
-		error_exit(NULL, "Error: Duplicate or invalid texture\n");
+		error_exit(NULL, "Error\nDuplicate or invalid texture\n");
 		return (-1);
 	}
 	return (0);
@@ -61,7 +61,7 @@ int	parse_wall_texture(char *line, t_game *game)
 	dir = line;
 	line += 2;
 	if (*line != '\0' && *line != '\n' && !ft_white_space(*line))
-		return (error_exit(NULL, "Error: Missing map elements\n"));
+		return (error_exit(NULL, "Error\nMissing map elements\n"));
 	while (ft_white_space(*line))
 		line++;
 	path = line;
@@ -90,7 +90,7 @@ int	parse_color_line(char *line, t_game *game)
 	else if (game->type == 'C' && !game->flags->ceiling)
 		return (set_ceiling_color(game, line));
 	else
-		return (error_exit(game, "Error: Duplicate or invalid color\n"));
+		return (error_exit(NULL, "Error\nDuplicate or invalid color\n"));
 }
 
 char	*copy_map_line(char *line)

@@ -18,7 +18,7 @@ static int	process_single_line(t_game *game, char *line, int *i, int *start)
 	if (game->result == -1 && *start)
 	{
 		free(line);
-		ft_putstr_fd("Error: Invalid char in the map\n", 2);
+		ft_putstr_fd("Error\nInvalid char in the map\n", 2);
 		return (-1);
 	}
 	if (game->result > 0)
@@ -28,14 +28,14 @@ static int	process_single_line(t_game *game, char *line, int *i, int *start)
 		if (!game->map->map[*i - 1])
 		{
 			free(line);
-			ft_putstr_fd("Error: Memory allocation failed\n", 2);
+			ft_putstr_fd("Error\nMemory allocation failed\n", 2);
 			return (-1);
 		}
 	}
 	else if (*start && line[0] == '\n')
 	{
 		free(line);
-		ft_putstr_fd("Error: Invalid map format\n", 2);
+		ft_putstr_fd("Error\nInvalid map format\n", 2);
 		return (-1);
 	}
 	return (0);
@@ -82,7 +82,7 @@ static int	read_map(t_game *game, int fd, int lines)
 	game->map->map = ft_calloc(1, sizeof(char *) * (lines + 1));
 	if (!game->map->map)
 	{
-		ft_putstr_fd("Error: Memory allocation failed\n", 2);
+		ft_putstr_fd("Error\nMemory allocation failed\n", 2);
 		return (-1);
 	}
 	line = get_next_line(fd);
@@ -101,6 +101,8 @@ int	parse_map_grid(char *map_path, t_game *game)
 	int	fd;
 
 	lines = count_map_lines(map_path, game);
+	if (lines == 0)
+		ft_putstr_fd("Error\nMissing map\n", 2);
 	if (lines <= 0)
 		return (-1);
 	fd = open_file_checked(map_path, game);
